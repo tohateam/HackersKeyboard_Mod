@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<string name="compact_num1_main">1</string>
+	<string name="compact_num1_shift">!</string>
+	<string name="compact_num1_alt">`</string>
+	
+	<string name="compact_num2_main">2</string>
+	<string name="compact_num2_shift">\@</string>
+	<string name="compact_num2_alt">~</string>
+
+	<string name="compact_num3_main">3</string>
+	<string name="compact_num3_shift">#</string>
+	<string name="compact_num3_alt">-</string>
+
+	<string name="compact_num4_main">4</string>
+	<string name="compact_num4_shift">$</string>
+	<string name="compact_num4_alt">_</string>
+
+	<string name="compact_num5_main">5</string>
+	<string name="compact_num5_shift">%</string>
+	<string name="compact_num5_alt">=</string>
+
+	<string name="compact_num6_main">6</string>
+	<string name="compact_num6_shift">^</string>
+	<string name="compact_num6_alt">+</string>
+
+	<string name="compact_num7_main">7</string>
+	<string name="compact_num7_shift">&amp;</string>
+	<string name="compact_num7_alt">{</string>
+
+	<string name="compact_num8_main">8</string>
+	<string name="compact_num8_shift">*</string>
+	<string name="compact_num8_alt">}</string>
+
+	<string name="compact_num9_main">9</string>
+	<string name="compact_num9_shift">(</string>
+	<string name="compact_num9_alt">[</string>
+
+	<string name="compact_num0_main">0</string>
+	<string name="compact_num0_shift">)</string>
+	<string name="compact_num0_alt">]</string>
+
+	<string name="compact_singleQuot_main">э</string>
+	<string name="compact_singleQuot_shift">Э</string>
+	<string name="compact_singleQuot_alt">&quot;\'|</string>
+
+	<string name="compact_comma_main">б</string>
+	<string name="compact_comma_shift">Б</string>
+	<string name="compact_comma_alt">,;&lt;</string>
+
+	<string name="compact_dot_main">ю</string>
+	<string name="compact_dot_shift">Ю</string>
+	<string name="compact_dot_alt">.:&gt;</string>
+
+	<string name="compact_bksl_main">.</string>
+    <string name="compact_bksl_shift">,</string>
+    <string name="compact_bksl_alt">\?\\</string>
+	
+</resources>

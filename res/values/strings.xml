@@ -399,11 +399,13 @@
         <item>4-row Gingerbread layout</item>
         <item>5-row compact layout (US QWERTY only!)</item>
         <item>Full 5-row layout</item>
+		<item>Tablet layout</item>
     </string-array>
     <string-array name="keyboard_mode_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+		<item>3</item>
     </string-array>
 
     <string name="title_ctrl_a_override">Ctrl-A (select all) override</string>

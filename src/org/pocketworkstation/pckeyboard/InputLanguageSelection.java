@@ -148,9 +148,17 @@ public class InputLanguageSelection extends PreferenceActivity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         addPreferencesFromResource(R.xml.language_prefs);
+
+		Locale current = getResources().getConfiguration().locale;
+		String CurrentLang = current.getLanguage();
         // Get the settings preferences
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String selectedLanguagePref = sp.getString(LatinIME.PREF_SELECTED_LANGUAGES, "");
+		String mLocales = "en,";
+		if (!CurrentLang.equals("en")) {
+            mLocales = mLocales+CurrentLang;
+		}
+			
+        String selectedLanguagePref = sp.getString(LatinIME.PREF_SELECTED_LANGUAGES, mLocales);
         Log.i(TAG, "selected languages: " + selectedLanguagePref);
         String[] languageList = selectedLanguagePref.split(",");
         

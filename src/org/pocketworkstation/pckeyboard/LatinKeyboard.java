@@ -41,7 +41,7 @@ import java.util.Locale;
 public class LatinKeyboard extends Keyboard {
 
     private static final boolean DEBUG_PREFERRED_LETTER = true;
-    private static final String TAG = "PCKeyboardLK";
+    private static final String TAG = "HK-LatinKeyboard";
     private static final int OPACITY_FULLY_OPAQUE = 255;
     private static final int SPACE_LED_LENGTH_PERCENT = 80;
 
@@ -144,7 +144,7 @@ public class LatinKeyboard extends Keyboard {
         sSpacebarVerticalCorrection = res.getDimensionPixelOffset(
                 R.dimen.spacebar_vertical_correction);
         mIsAlphaKeyboard = xmlLayoutResId == R.xml.kbd_qwerty;
-        mIsAlphaFullKeyboard = xmlLayoutResId == R.xml.kbd_full;
+        mIsAlphaFullKeyboard = xmlLayoutResId == R.xml.kbd_full || xmlLayoutResId == R.xml.kbd_tablet;
         mIsFnFullKeyboard = xmlLayoutResId == R.xml.kbd_full_fn || xmlLayoutResId == R.xml.kbd_compact_fn;
         // The index of space key is available only after Keyboard constructor has finished.
         mSpaceKeyIndexArray = new int[] { indexOf(LatinIME.ASCII_SPACE) };

@@ -29,8 +29,9 @@ import java.util.HashMap;
 import java.util.Locale;
 
 public class KeyboardSwitcher implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
-    private static String TAG = "PCKeyboardKbSw";
+SharedPreferences.OnSharedPreferenceChangeListener
+{
+    private static String TAG = "HK-KeyboardSwitcher";
 
     public static final int MODE_NONE = 0;
     public static final int MODE_TEXT = 1;
@@ -78,15 +79,17 @@ public class KeyboardSwitcher implements
     private static final int KBD_FULL_FN = R.xml.kbd_full_fn;
     private static final int KBD_COMPACT = R.xml.kbd_compact;
     private static final int KBD_COMPACT_FN = R.xml.kbd_compact_fn;
+	// New layout
+	private static final int KBD_TABLET = R.xml.kbd_tablet;
 
     private LatinKeyboardView mInputView;
     private static final int[] ALPHABET_MODES = { KEYBOARDMODE_NORMAL,
-            KEYBOARDMODE_URL, KEYBOARDMODE_EMAIL, KEYBOARDMODE_IM,
-            KEYBOARDMODE_WEB, KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY,
-            KEYBOARDMODE_URL_WITH_SETTINGS_KEY,
-            KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY,
-            KEYBOARDMODE_IM_WITH_SETTINGS_KEY,
-            KEYBOARDMODE_WEB_WITH_SETTINGS_KEY };
+		KEYBOARDMODE_URL, KEYBOARDMODE_EMAIL, KEYBOARDMODE_IM,
+		KEYBOARDMODE_WEB, KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY,
+		KEYBOARDMODE_URL_WITH_SETTINGS_KEY,
+		KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY,
+		KEYBOARDMODE_IM_WITH_SETTINGS_KEY,
+		KEYBOARDMODE_WEB_WITH_SETTINGS_KEY };
 
     private LatinIME mInputMethodService;
 
@@ -148,9 +151,9 @@ public class KeyboardSwitcher implements
         sInstance.mInputMethodService = ims;
 
         final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(ims);
+			.getDefaultSharedPreferences(ims);
         sInstance.mLayoutId = Integer.valueOf(prefs.getString(
-                PREF_KEYBOARD_LAYOUT, DEFAULT_LAYOUT_ID));
+												  PREF_KEYBOARD_LAYOUT, DEFAULT_LAYOUT_ID));
 
         sInstance.updateSettingsKeyState(prefs);
         prefs.registerOnSharedPreferenceChangeListener(sInstance);
@@ -179,16 +182,16 @@ public class KeyboardSwitcher implements
             return new KeyboardId(KBD_FULL_FN, KEYBOARDMODE_SYMBOLS, true, hasVoice);
         }
         return new KeyboardId(KBD_SYMBOLS,
-                mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
-                        : KEYBOARDMODE_SYMBOLS, false, hasVoice);
+							  mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
+							  : KEYBOARDMODE_SYMBOLS, false, hasVoice);
     }
 
     private KeyboardId makeSymbolsShiftedId(boolean hasVoice) {
         if (mFullMode > 0)
             return null;
         return new KeyboardId(KBD_SYMBOLS_SHIFT,
-                mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
-                        : KEYBOARDMODE_SYMBOLS, false, hasVoice);
+							  mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
+							  : KEYBOARDMODE_SYMBOLS, false, hasVoice);
     }
 
     public void makeKeyboards(boolean forceCreate) {
@@ -215,7 +218,8 @@ public class KeyboardSwitcher implements
      * Represents the parameters necessary to construct a new LatinKeyboard,
      * which also serve as a unique identifier for each keyboard type.
      */
-    private static class KeyboardId {
+    private static class KeyboardId
+	{
         // TODO: should have locale and portrait/landscape orientation?
         public final int mXml;
         public final int mKeyboardMode;
@@ -228,7 +232,7 @@ public class KeyboardSwitcher implements
         private final int mHashCode;
 
         public KeyboardId(int xml, int mode, boolean enableShiftLock,
-                boolean hasVoice) {
+						  boolean hasVoice) {
             this.mXml = xml;
             this.mKeyboardMode = mode;
             this.mEnableShiftLock = enableShiftLock;
@@ -237,7 +241,7 @@ public class KeyboardSwitcher implements
             this.mUsingExtension = LatinIME.sKeyboardSettings.useExtension;
 
             this.mHashCode = Arrays.hashCode(new Object[] { xml, mode,
-                    enableShiftLock, hasVoice });
+												 enableShiftLock, hasVoice });
         }
 
         @Override
@@ -247,11 +251,11 @@ public class KeyboardSwitcher implements
 
         private boolean equals(KeyboardId other) {
             return other != null
-                    && other.mXml == this.mXml
-                    && other.mKeyboardMode == this.mKeyboardMode
-                    && other.mUsingExtension == this.mUsingExtension
-                    && other.mEnableShiftLock == this.mEnableShiftLock
-                    && other.mHasVoice == this.mHasVoice;
+				&& other.mXml == this.mXml
+				&& other.mKeyboardMode == this.mKeyboardMode
+				&& other.mUsingExtension == this.mUsingExtension
+				&& other.mEnableShiftLock == this.mEnableShiftLock
+				&& other.mHasVoice == this.mHasVoice;
         }
 
         @Override
@@ -283,12 +287,12 @@ public class KeyboardSwitcher implements
             setKeyboardMode(mode, imeOptions, enableVoice, mPreferSymbols);
         } catch (RuntimeException e) {
             LatinImeLogger.logOnException(mode + "," + imeOptions + ","
-                    + mPreferSymbols, e);
+										  + mPreferSymbols, e);
         }
     }
 
     private void setKeyboardMode(int mode, int imeOptions, boolean enableVoice,
-            boolean isSymbols) {
+								 boolean isSymbols) {
         if (mInputView == null)
             return;
         mMode = mode;
@@ -313,7 +317,7 @@ public class KeyboardSwitcher implements
         mInputView.setKeyboard(keyboard);
         keyboard.setShiftState(Keyboard.SHIFT_OFF);
         keyboard.setImeOptions(mInputMethodService.getResources(), mMode,
-                imeOptions);
+							   imeOptions);
         keyboard.updateSymbolIcons(mIsAutoCompletionActive);
     }
 
@@ -327,7 +331,7 @@ public class KeyboardSwitcher implements
             conf.locale = LatinIME.sKeyboardSettings.inputLocale;
             orig.updateConfiguration(conf, null);
             keyboard = new LatinKeyboard(mInputMethodService, id.mXml,
-                    id.mKeyboardMode, id.mKeyboardHeightPercent);
+										 id.mKeyboardMode, id.mKeyboardHeightPercent);
             keyboard.setVoiceMode(hasVoiceButton(id.mXml == R.xml.kbd_symbols), mHasVoice);
             keyboard.setLanguageSwitcher(mLanguageSwitcher, mIsAutoCompletionActive);
 //            if (isFullMode()) {
@@ -355,60 +359,65 @@ public class KeyboardSwitcher implements
 
     private KeyboardId getKeyboardId(int mode, int imeOptions, boolean isSymbols) {
         boolean hasVoice = hasVoiceButton(isSymbols);
-        if (mFullMode > 0) {
-            switch (mode) {
-            case MODE_TEXT:
-            case MODE_URL:
-            case MODE_EMAIL:
-            case MODE_IM:
-            case MODE_WEB:
-                return new KeyboardId(mFullMode == 1 ? KBD_COMPACT : KBD_FULL,
-                        KEYBOARDMODE_NORMAL, true, hasVoice);
-            }
-        }
+		int keyboardRowsResId;
+
+		switch (mFullMode) {
+			case 1:
+				keyboardRowsResId = KBD_COMPACT;
+				break;
+			case 2:
+				keyboardRowsResId = KBD_FULL;
+				break;
+			case 3:
+				keyboardRowsResId = KBD_TABLET;
+				break;
+			default:
+				keyboardRowsResId = KBD_QWERTY;
+		}
+
         // TODO: generalize for any KeyboardId
-        int keyboardRowsResId = KBD_QWERTY;
+        //int keyboardRowsResId = KBD_QWERTY;
         if (isSymbols) {
             if (mode == MODE_PHONE) {
                 return new KeyboardId(KBD_PHONE_SYMBOLS, 0, false, hasVoice);
             } else {
                 return new KeyboardId(
-                        KBD_SYMBOLS,
-                        mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
-                                : KEYBOARDMODE_SYMBOLS, false, hasVoice);
+					KBD_SYMBOLS,
+					mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
+					: KEYBOARDMODE_SYMBOLS, false, hasVoice);
             }
         }
         switch (mode) {
-        case MODE_NONE:
-            LatinImeLogger.logOnWarning("getKeyboardId:" + mode + ","
-                    + imeOptions + "," + isSymbols);
-            /* fall through */
-        case MODE_TEXT:
-            return new KeyboardId(keyboardRowsResId,
-                    mHasSettingsKey ? KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY
-                            : KEYBOARDMODE_NORMAL, true, hasVoice);
-        case MODE_SYMBOLS:
-            return new KeyboardId(KBD_SYMBOLS,
-                    mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
-                            : KEYBOARDMODE_SYMBOLS, false, hasVoice);
-        case MODE_PHONE:
-            return new KeyboardId(KBD_PHONE, 0, false, hasVoice);
-        case MODE_URL:
-            return new KeyboardId(keyboardRowsResId,
-                    mHasSettingsKey ? KEYBOARDMODE_URL_WITH_SETTINGS_KEY
-                            : KEYBOARDMODE_URL, true, hasVoice);
-        case MODE_EMAIL:
-            return new KeyboardId(keyboardRowsResId,
-                    mHasSettingsKey ? KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY
-                            : KEYBOARDMODE_EMAIL, true, hasVoice);
-        case MODE_IM:
-            return new KeyboardId(keyboardRowsResId,
-                    mHasSettingsKey ? KEYBOARDMODE_IM_WITH_SETTINGS_KEY
-                            : KEYBOARDMODE_IM, true, hasVoice);
-        case MODE_WEB:
-            return new KeyboardId(keyboardRowsResId,
-                    mHasSettingsKey ? KEYBOARDMODE_WEB_WITH_SETTINGS_KEY
-                            : KEYBOARDMODE_WEB, true, hasVoice);
+			case MODE_NONE:
+				LatinImeLogger.logOnWarning("getKeyboardId:" + mode + ","
+											+ imeOptions + "," + isSymbols);
+				/* fall through */
+			case MODE_TEXT:
+				return new KeyboardId(keyboardRowsResId,
+									  mHasSettingsKey ? KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY
+									  : KEYBOARDMODE_NORMAL, true, hasVoice);
+			case MODE_SYMBOLS:
+				return new KeyboardId(KBD_SYMBOLS,
+									  mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
+									  : KEYBOARDMODE_SYMBOLS, false, hasVoice);
+			case MODE_PHONE:
+				return new KeyboardId(KBD_PHONE, 0, false, hasVoice);
+			case MODE_URL:
+				return new KeyboardId(keyboardRowsResId,
+									  mHasSettingsKey ? KEYBOARDMODE_URL_WITH_SETTINGS_KEY
+									  : KEYBOARDMODE_URL, true, hasVoice);
+			case MODE_EMAIL:
+				return new KeyboardId(keyboardRowsResId,
+									  mHasSettingsKey ? KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY
+									  : KEYBOARDMODE_EMAIL, true, hasVoice);
+			case MODE_IM:
+				return new KeyboardId(keyboardRowsResId,
+									  mHasSettingsKey ? KEYBOARDMODE_IM_WITH_SETTINGS_KEY
+									  : KEYBOARDMODE_IM, true, hasVoice);
+			case MODE_WEB:
+				return new KeyboardId(keyboardRowsResId,
+									  mHasSettingsKey ? KEYBOARDMODE_WEB_WITH_SETTINGS_KEY
+									  : KEYBOARDMODE_WEB, true, hasVoice);
         }
         return null;
     }
@@ -463,12 +472,12 @@ public class KeyboardSwitcher implements
         if (mInputView == null) return;
         mInputView.setAltIndicator(active);
     }
-    
+
     public void setMetaIndicator(boolean active) {
         if (mInputView == null) return;
         mInputView.setMetaIndicator(active);
     }
-    
+
     public void toggleShift() {
         //Log.i(TAG, "toggleShift isAlphabetMode=" + isAlphabetMode() + " mSettings.fullMode=" + mSettings.fullMode);
         if (isAlphabetMode())
@@ -479,7 +488,7 @@ public class KeyboardSwitcher implements
             return;
         }
         if (mCurrentId.equals(mSymbolsId)
-                || !mCurrentId.equals(mSymbolsShiftedId)) {
+			|| !mCurrentId.equals(mSymbolsShiftedId)) {
             LatinKeyboard symbolsShiftedKeyboard = getKeyboard(mSymbolsShiftedId);
             mCurrentId = mSymbolsShiftedId;
             mInputView.setKeyboard(symbolsShiftedKeyboard);
@@ -488,7 +497,7 @@ public class KeyboardSwitcher implements
             symbolsShiftedKeyboard.enableShiftLock();
             symbolsShiftedKeyboard.setShiftState(Keyboard.SHIFT_LOCKED);
             symbolsShiftedKeyboard.setImeOptions(mInputMethodService
-                    .getResources(), mMode, mImeOptions);
+												 .getResources(), mMode, mImeOptions);
         } else {
             LatinKeyboard symbolsKeyboard = getKeyboard(mSymbolsId);
             mCurrentId = mSymbolsId;
@@ -496,7 +505,7 @@ public class KeyboardSwitcher implements
             symbolsKeyboard.enableShiftLock();
             symbolsKeyboard.setShiftState(Keyboard.SHIFT_OFF);
             symbolsKeyboard.setImeOptions(mInputMethodService.getResources(),
-                    mMode, mImeOptions);
+										  mMode, mImeOptions);
         }
     }
 
@@ -504,7 +513,7 @@ public class KeyboardSwitcher implements
         // Snap back to the previous keyboard mode if the user cancels sliding
         // input.
         if (mAutoModeSwitchState == AUTO_MODE_SWITCH_STATE_MOMENTARY
-                && getPointerCount() == 1)
+			&& getPointerCount() == 1)
             mInputMethodService.changeKeyboardMode();
     }
 
@@ -550,54 +559,54 @@ public class KeyboardSwitcher implements
         // characters
         // followed by a space/enter
         switch (mAutoModeSwitchState) {
-        case AUTO_MODE_SWITCH_STATE_MOMENTARY:
-            // Only distinct multi touch devices can be in this state.
-            // On non-distinct multi touch devices, mode change key is handled
-            // by {@link onKey},
-            // not by {@link onPress} and {@link onRelease}. So, on such
-            // devices,
-            // {@link mAutoModeSwitchState} starts from {@link
-            // AUTO_MODE_SWITCH_STATE_SYMBOL_BEGIN},
-            // or {@link AUTO_MODE_SWITCH_STATE_ALPHA}, not from
-            // {@link AUTO_MODE_SWITCH_STATE_MOMENTARY}.
-            if (key == LatinKeyboard.KEYCODE_MODE_CHANGE) {
-                // Detected only the mode change key has been pressed, and then
-                // released.
-                if (mIsSymbols) {
-                    mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_SYMBOL_BEGIN;
-                } else {
-                    mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_ALPHA;
-                }
-            } else if (getPointerCount() == 1) {
-                // Snap back to the previous keyboard mode if the user pressed
-                // the mode change key
-                // and slid to other key, then released the finger.
-                // If the user cancels the sliding input, snapping back to the
-                // previous keyboard
-                // mode is handled by {@link #onCancelInput}.
-                mInputMethodService.changeKeyboardMode();
-            } else {
-                // Chording input is being started. The keyboard mode will be
-                // snapped back to the
-                // previous mode in {@link onReleaseSymbol} when the mode change
-                // key is released.
-                mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_CHORDING;
-            }
-            break;
-        case AUTO_MODE_SWITCH_STATE_SYMBOL_BEGIN:
-            if (key != LatinIME.ASCII_SPACE && key != LatinIME.ASCII_ENTER
+			case AUTO_MODE_SWITCH_STATE_MOMENTARY:
+				// Only distinct multi touch devices can be in this state.
+				// On non-distinct multi touch devices, mode change key is handled
+				// by {@link onKey},
+				// not by {@link onPress} and {@link onRelease}. So, on such
+				// devices,
+				// {@link mAutoModeSwitchState} starts from {@link
+				// AUTO_MODE_SWITCH_STATE_SYMBOL_BEGIN},
+				// or {@link AUTO_MODE_SWITCH_STATE_ALPHA}, not from
+				// {@link AUTO_MODE_SWITCH_STATE_MOMENTARY}.
+				if (key == LatinKeyboard.KEYCODE_MODE_CHANGE) {
+					// Detected only the mode change key has been pressed, and then
+					// released.
+					if (mIsSymbols) {
+						mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_SYMBOL_BEGIN;
+					} else {
+						mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_ALPHA;
+					}
+				} else if (getPointerCount() == 1) {
+					// Snap back to the previous keyboard mode if the user pressed
+					// the mode change key
+					// and slid to other key, then released the finger.
+					// If the user cancels the sliding input, snapping back to the
+					// previous keyboard
+					// mode is handled by {@link #onCancelInput}.
+					mInputMethodService.changeKeyboardMode();
+				} else {
+					// Chording input is being started. The keyboard mode will be
+					// snapped back to the
+					// previous mode in {@link onReleaseSymbol} when the mode change
+					// key is released.
+					mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_CHORDING;
+				}
+				break;
+			case AUTO_MODE_SWITCH_STATE_SYMBOL_BEGIN:
+				if (key != LatinIME.ASCII_SPACE && key != LatinIME.ASCII_ENTER
                     && key >= 0) {
-                mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_SYMBOL;
-            }
-            break;
-        case AUTO_MODE_SWITCH_STATE_SYMBOL:
-            // Snap back to alpha keyboard mode if user types one or more
-            // non-space/enter
-            // characters followed by a space/enter.
-            if (key == LatinIME.ASCII_ENTER || key == LatinIME.ASCII_SPACE) {
-                mInputMethodService.changeKeyboardMode();
-            }
-            break;
+					mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_SYMBOL;
+				}
+				break;
+			case AUTO_MODE_SWITCH_STATE_SYMBOL:
+				// Snap back to alpha keyboard mode if user types one or more
+				// non-space/enter
+				// characters followed by a space/enter.
+				if (key == LatinIME.ASCII_ENTER || key == LatinIME.ASCII_SPACE) {
+					mInputMethodService.changeKeyboardMode();
+				}
+				break;
         }
     }
 
@@ -623,15 +632,15 @@ public class KeyboardSwitcher implements
             for (int i = 0; i < LatinIMEUtil.GCUtils.GC_TRY_LOOP_MAX && tryGC; ++i) {
                 try {
                     mInputView = (LatinKeyboardView) mInputMethodService
-                            .getLayoutInflater().inflate(THEMES[newLayout],
-                                    null);
+						.getLayoutInflater().inflate(THEMES[newLayout],
+													 null);
                     tryGC = false;
                 } catch (OutOfMemoryError e) {
                     tryGC = LatinIMEUtil.GCUtils.getInstance().tryGCOrWait(
-                            mLayoutId + "," + newLayout, e);
+						mLayoutId + "," + newLayout, e);
                 } catch (InflateException e) {
                     tryGC = LatinIMEUtil.GCUtils.getInstance().tryGCOrWait(
-                            mLayoutId + "," + newLayout, e);
+						mLayoutId + "," + newLayout, e);
                 }
             }
             mInputView.setExtensionLayoutResId(THEMES[newLayout]);
@@ -640,20 +649,20 @@ public class KeyboardSwitcher implements
             mLayoutId = newLayout;
         }
         mInputMethodService.mHandler.post(new Runnable() {
-            public void run() {
-                if (mInputView != null) {
-                    mInputMethodService.setInputView(mInputView);
-                }
-                mInputMethodService.updateInputViewShown();
-            }
-        });
+				public void run() {
+					if (mInputView != null) {
+						mInputMethodService.setInputView(mInputView);
+					}
+					mInputMethodService.updateInputViewShown();
+				}
+			});
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-            String key) {
+										  String key) {
         if (PREF_KEYBOARD_LAYOUT.equals(key)) {
             changeLatinKeyboardView(Integer.valueOf(sharedPreferences
-                    .getString(key, DEFAULT_LAYOUT_ID)), true);
+													.getString(key, DEFAULT_LAYOUT_ID)), true);
         } else if (LatinIMESettings.PREF_SETTINGS_KEY.equals(key)) {
             updateSettingsKeyState(sharedPreferences);
             recreateInputView();
@@ -665,23 +674,23 @@ public class KeyboardSwitcher implements
             LatinKeyboardView keyboardView = getInputView();
             mIsAutoCompletionActive = isAutoCompletion;
             keyboardView.invalidateKey(((LatinKeyboard) keyboardView
-                    .getKeyboard())
-                    .onAutoCompletionStateChanged(isAutoCompletion));
+									   .getKeyboard())
+									   .onAutoCompletionStateChanged(isAutoCompletion));
         }
     }
 
     private void updateSettingsKeyState(SharedPreferences prefs) {
         Resources resources = mInputMethodService.getResources();
         final String settingsKeyMode = prefs.getString(
-                LatinIMESettings.PREF_SETTINGS_KEY, resources
-                        .getString(DEFAULT_SETTINGS_KEY_MODE));
+			LatinIMESettings.PREF_SETTINGS_KEY, resources
+			.getString(DEFAULT_SETTINGS_KEY_MODE));
         // We show the settings key when 1) SETTINGS_KEY_MODE_ALWAYS_SHOW or
         // 2) SETTINGS_KEY_MODE_AUTO and there are two or more enabled IMEs on
         // the system
         if (settingsKeyMode.equals(resources
-                .getString(SETTINGS_KEY_MODE_ALWAYS_SHOW))
-                || (settingsKeyMode.equals(resources
-                        .getString(SETTINGS_KEY_MODE_AUTO)))) {
+								   .getString(SETTINGS_KEY_MODE_ALWAYS_SHOW))
+			|| (settingsKeyMode.equals(resources
+									   .getString(SETTINGS_KEY_MODE_AUTO)))) {
             mHasSettingsKey = true;
         } else {
             mHasSettingsKey = false;

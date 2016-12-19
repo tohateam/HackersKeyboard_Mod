@@ -63,4 +63,21 @@
     <integer name="key_fkey_f11">-141</integer>
     <integer name="key_fkey_f12">-142</integer>
     <integer name="key_num_lock">-143</integer>
+	
+	<!--=============== Add new code ===============-->
+
+	<integer name="key_next_language">-104</integer>
+	
+	<!--Editor-->
+	<integer name="key_copy">-1000</integer>
+	<integer name="key_cut">-1001</integer>
+	<integer name="key_paste">-1002</integer>
+	<integer name="key_select_all">-1003</integer>
+
+	<!--Settings-->
+	<integer name="key_toggle_row">-1004</integer>
+	<integer name="key_show_hint">-1005</integer>
+	<integer name="key_show_suggest">-1006</integer>
+	<integer name="key_layout_change">-1007</integer>
+	
 </resources>
