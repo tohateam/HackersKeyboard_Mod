@@ -89,7 +89,7 @@ public class LatinIME extends InputMethodService implements
         ComposeSequencing,
         LatinKeyboardBaseView.OnKeyboardActionListener,
         SharedPreferences.OnSharedPreferenceChangeListener {
-    private static final String TAG = "PCKeyboardIME";
+    private static final String TAG = "HK-LatinIME";
     private static final boolean PERF_DEBUG = false;
     static final boolean DEBUG = false;
     static final boolean TRACE = false;
@@ -373,7 +373,7 @@ public class LatinIME extends InputMethodService implements
 
     @Override
     public void onCreate() {
-        Log.i("PCKeyboard", "onCreate(), os.version=" + System.getProperty("os.version"));
+        //Log.i(TAG, "onCreate(), os.version=" + System.getProperty("os.version"));
         LatinImeLogger.init(this);
         KeyboardSwitcher.init(this);
         super.onCreate();
@@ -447,19 +447,11 @@ public class LatinIME extends InputMethodService implements
         mOrientation = conf.orientation;
 
         // register to receive ringer mode changes for silent mode
-        IntentFilter filter = new IntentFilter(
-                AudioManager.RINGER_MODE_CHANGED_ACTION);
+        IntentFilter filter = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
         registerReceiver(mReceiver, filter);
         prefs.registerOnSharedPreferenceChangeListener(this);
         setNotification(mKeyboardNotification);
     }
-
-//    private int getKeyboardModeNum(int origMode, int override) {
-//        if (mNumKeyboardModes == 2 && origMode == 2) origMode = 1; // skip "compact". FIXME!
-//        int num = (origMode + override) % mNumKeyboardModes;
-//        if (mNumKeyboardModes == 2 && num == 1) num = 2; // skip "compact". FIXME!
-//        return num;
-//    }
     
     private void updateKeyboardOptions() {
         //Log.i(TAG, "setFullKeyboardOptions " + fullInPortrait + " " + heightPercentPortrait + " " + heightPercentLandscape);
@@ -547,10 +539,8 @@ public class LatinIME extends InputMethodService implements
                     String tag = xrp.getName();
                     if (tag != null) {
                         if (tag.equals("part")) {
-                            String dictFileName = xrp.getAttributeValue(null,
-                                    "name");
-                            dictionaries.add(res.getIdentifier(dictFileName,
-                                    "raw", packageName));
+                            String dictFileName = xrp.getAttributeValue(null, "name");
+                            dictionaries.add(res.getIdentifier(dictFileName, "raw", packageName));
                         }
                     }
                 }
@@ -583,8 +573,7 @@ public class LatinIME extends InputMethodService implements
         if (mSuggest != null) {
             mSuggest.close();
         }
-        SharedPreferences sp = PreferenceManager
-                .getDefaultSharedPreferences(this);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         mQuickFixes = sp.getBoolean(PREF_QUICK_FIXES, getResources()
                 .getBoolean(R.bool.default_quick_fixes));
 
@@ -614,8 +603,7 @@ public class LatinIME extends InputMethodService implements
         mSuggest.setAutoDictionary(mAutoDictionary);
         updateCorrectionMode();
         mWordSeparators = mResources.getString(R.string.word_separators);
-        mSentenceSeparators = mResources
-                .getString(R.string.sentence_separators);
+        mSentenceSeparators = mResources.getString(R.string.sentence_separators);
         initSuggestPuncList();
 
         conf.locale = saveLocale;
@@ -643,7 +631,7 @@ public class LatinIME extends InputMethodService implements
 
     @Override
     public void onConfigurationChanged(Configuration conf) {
-        Log.i("PCKeyboard", "onConfigurationChanged()");
+        //Log.i(TAG, "onConfigurationChanged()");
         // If the system locale changes and is different from the saved
         // locale (mSystemLocale), then reload the input locale list from the
         // latin ime settings (shared prefs) and reset the input locale
@@ -652,8 +640,7 @@ public class LatinIME extends InputMethodService implements
         if (!TextUtils.equals(systemLocale, mSystemLocale)) {
             mSystemLocale = systemLocale;
             if (mLanguageSwitcher != null) {
-                mLanguageSwitcher.loadLocales(PreferenceManager
-                        .getDefaultSharedPreferences(this));
+                mLanguageSwitcher.loadLocales(PreferenceManager.getDefaultSharedPreferences(this));
                 mLanguageSwitcher.setSystemLocale(conf.locale);
                 toggleLanguage(true, true);
             } else {
@@ -695,7 +682,7 @@ public class LatinIME extends InputMethodService implements
     	@Override
     	public void attachToken(IBinder token) {
     		super.attachToken(token);
-    		Log.i(TAG, "attachToken " + token);
+    		//Log.i(TAG, "attachToken " + token);
     		if (mToken == null) {
     			mToken = token;
     		}
@@ -746,7 +733,7 @@ public class LatinIME extends InputMethodService implements
         sKeyboardSettings.editorFieldId = attribute.fieldId;
         sKeyboardSettings.editorInputType = attribute.inputType;
 
-        //Log.i("PCKeyboard", "onStartInputView " + attribute + ", inputType= " + Integer.toHexString(attribute.inputType) + ", restarting=" + restarting);
+        //Log.i(TAG, "onStartInputView " + attribute + ", inputType= " + Integer.toHexString(attribute.inputType) + ", restarting=" + restarting);
         LatinKeyboardView inputView = mKeyboardSwitcher.getInputView();
         // In landscape mode, this method gets called without the input view
         // being created.
@@ -797,7 +784,7 @@ public class LatinIME extends InputMethodService implements
         mSuggestionForceOff = false;
         mKeyboardModeOverridePortrait = 0;
         mKeyboardModeOverrideLandscape = 0;
-        sKeyboardSettings.useExtension = false;
+        //sKeyboardSettings.useExtension = false; // сброс доп. сроки
 
         switch (attribute.inputType & EditorInfo.TYPE_MASK_CLASS) {
         case EditorInfo.TYPE_CLASS_NUMBER:
@@ -1087,9 +1074,9 @@ public class LatinIME extends InputMethodService implements
     @Override
     public void onDisplayCompletions(CompletionInfo[] completions) {
         if (DEBUG) {
-            Log.i("foo", "Received completions:");
+            //Log.i("foo", "Received completions:");
             for (int i = 0; i < (completions != null ? completions.length : 0); i++) {
-                Log.i("foo", "  #" + i + ": " + completions[i]);
+                //Log.i("foo", "  #" + i + ": " + completions[i]);
             }
         }
         if (mCompletionOn) {
@@ -1115,7 +1102,7 @@ public class LatinIME extends InputMethodService implements
 
     private void setCandidatesViewShownInternal(boolean shown,
             boolean needsInputViewShown) {
-//        Log.i(TAG, "setCandidatesViewShownInternal(" + shown + ", " + needsInputViewShown +
+//        //Log.i(TAG, "setCandidatesViewShownInternal(" + shown + ", " + needsInputViewShown +
 //                " mCompletionOn=" + mCompletionOn +
 //                " mPredictionOnForMode=" + mPredictionOnForMode +
 //                " mPredictionOnPref=" + mPredictionOnPref +
@@ -2215,7 +2202,7 @@ public class LatinIME extends InputMethodService implements
     }
 
     private void setModCtrl(boolean val) {
-        // Log.i("LatinIME", "setModCtrl "+ mModCtrl + "->" + val + ", chording=" + mCtrlKeyState.isChording());
+        // //Log.i("LatinIME", "setModCtrl "+ mModCtrl + "->" + val + ", chording=" + mCtrlKeyState.isChording());
         mKeyboardSwitcher.setCtrlIndicator(val);
         mModCtrl = val;
     }
@@ -2972,7 +2959,7 @@ public class LatinIME extends InputMethodService implements
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
-        Log.i("PCKeyboard", "onSharedPreferenceChanged()");
+        //Log.i(TAG, "onSharedPreferenceChanged()");
         boolean needReload = false;
         Resources res = getResources();
         
@@ -3149,7 +3136,7 @@ public class LatinIME extends InputMethodService implements
             }
             toggleLanguage(true, true);
         } else {
-            Log.i(TAG, "Unsupported swipe action config: " + action);
+            //Log.i(TAG, "Unsupported swipe action config: " + action);
         }
         return true;
     }
@@ -3458,8 +3445,7 @@ public class LatinIME extends InputMethodService implements
 
     private void loadSettings() {
         // Get the settings preferences
-        SharedPreferences sp = PreferenceManager
-                .getDefaultSharedPreferences(this);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         mVibrateOn = sp.getBoolean(PREF_VIBRATE_ON, false);
         mVibrateLen = getPrefInt(sp, PREF_VIBRATE_LEN, getResources().getString(R.string.vibrate_duration_ms));
         mSoundOn = sp.getBoolean(PREF_SOUND_ON, false);
@@ -3626,7 +3612,7 @@ public class LatinIME extends InputMethodService implements
 
     static int getPrefInt(SharedPreferences prefs, String prefName, int defVal) {
         String prefVal = prefs.getString(prefName, Integer.toString(defVal));
-        //Log.i("PCKeyboard", "getPrefInt " + prefName + " = " + prefVal + ", default " + defVal);
+        //Log.i(TAG, "getPrefInt " + prefName + " = " + prefVal + ", default " + defVal);
         return getIntFromString(prefVal, defVal);
     }
 
@@ -3769,9 +3755,9 @@ public class LatinIME extends InputMethodService implements
 					} else {
 						LatinIME.sKeyboardSettings.keyboardModeLandscape = position;
 					}
-					//toggleLanguage(true, true);
-
-					//LatinIME.sKeyboardSettings.keyboardMode = position;
+					
+					LatinIME.sKeyboardSettings.keyboardMode = position;
+					
 					updateKeyboardOptions();
 					mKeyboardSwitcher.makeKeyboards(true);
 					reloadKeyboards();

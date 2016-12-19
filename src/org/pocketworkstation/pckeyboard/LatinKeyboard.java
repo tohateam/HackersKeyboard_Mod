@@ -316,7 +316,7 @@ public class LatinKeyboard extends Keyboard
 				setNonMicF1Key(mF1Key, ":)", R.xml.popup_smileys);
 			} else if (mMode == KeyboardSwitcher.MODE_TEXT) {
 				if(LatinIME.sKeyboardSettings.keyboardMode > 2)
-					setNonMicF1Key(mF1Key, ".", R.xml.popup_punctuation);
+					setNonMicF1Key(mF1Key, ",", R.xml.popup_altchars);
 				else
 					setMicF1Key(mF1Key);
 			} else {
