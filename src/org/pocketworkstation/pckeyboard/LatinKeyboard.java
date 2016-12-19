@@ -185,41 +185,36 @@ public class LatinKeyboard extends Keyboard {
             mEnterKey.popupResId = 0;
             mEnterKey.text = null;
             switch (options&(EditorInfo.IME_MASK_ACTION|EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
-                case EditorInfo.IME_ACTION_GO:
-                    mEnterKey.iconPreview = null;
-                    mEnterKey.icon = null;
-                    mEnterKey.label = res.getText(R.string.label_go_key);
-                    break;
-                case EditorInfo.IME_ACTION_NEXT:
-                    mEnterKey.iconPreview = null;
-                    mEnterKey.icon = null;
-                    mEnterKey.label = res.getText(R.string.label_next_key);
-                    break;
-                case EditorInfo.IME_ACTION_DONE:
-                    mEnterKey.iconPreview = null;
-                    mEnterKey.icon = null;
-                    mEnterKey.label = res.getText(R.string.label_done_key);
-                    break;
-                case EditorInfo.IME_ACTION_SEARCH:
-                    mEnterKey.iconPreview = res.getDrawable(
-                            R.drawable.sym_keyboard_feedback_search);
-                    mEnterKey.icon = res.getDrawable(R.drawable.sym_keyboard_search);
-                    mEnterKey.label = null;
-                    break;
-                case EditorInfo.IME_ACTION_SEND:
-                    mEnterKey.iconPreview = null;
-                    mEnterKey.icon = null;
-                    mEnterKey.label = res.getText(R.string.label_send_key);
-                    break;
-                default:
-                    // Keep Return key in IM mode, we have a dedicated smiley key.
-                    mEnterKey.iconPreview = res.getDrawable(
-                            R.drawable.sym_keyboard_feedback_return);
-                    mEnterKey.icon = res.getDrawable(R.drawable.sym_keyboard_return);
-                    mEnterKey.label = null;
-                    break;
-            }
-            // Set the initial size of the preview icon
+				case EditorInfo.IME_ACTION_SEARCH:
+					mEnterKey.iconPreview = res.getDrawable(R.drawable.sym_keyboard_feedback_search);
+					mEnterKey.icon = res.getDrawable(R.drawable.sym_keyboard_search);
+					mEnterKey.label = null;
+					break;
+				case EditorInfo.IME_ACTION_NEXT:
+				case EditorInfo.IME_ACTION_GO:
+					mEnterKey.iconPreview = res.getDrawable(R.drawable.ic_forward_white_24dp);
+					mEnterKey.icon = res.getDrawable(R.drawable.ic_forward_white_24dp);
+					mEnterKey.label = null;
+					break;
+				case EditorInfo.IME_ACTION_DONE:
+					mEnterKey.iconPreview = res.getDrawable(R.drawable.ic_done_white_24dp);
+					mEnterKey.icon = res.getDrawable(R.drawable.ic_done_white_24dp);
+					mEnterKey.label = null;
+					break;
+				case EditorInfo.IME_ACTION_SEND:
+					mEnterKey.iconPreview = res.getDrawable(R.drawable.ic_send_white_24dp);
+					mEnterKey.icon = res.getDrawable(R.drawable.ic_send_white_24dp);
+					mEnterKey.label = null;
+					break;
+				default:
+					// Keep Return key in IM mode, we have a dedicated smiley key.
+					mEnterKey.iconPreview = res.getDrawable(R.drawable.sym_keyboard_return);
+					mEnterKey.icon = res.getDrawable(R.drawable.sym_keyboard_return);
+					mEnterKey.label = null;
+					break;
+			}
+			
+			// Set the initial size of the preview icon
             if (mEnterKey.iconPreview != null) {
                 setDefaultBounds(mEnterKey.iconPreview);
             }
