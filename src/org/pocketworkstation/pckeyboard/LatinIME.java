@@ -382,8 +382,7 @@ public class LatinIME extends InputMethodService implements
         mResources = getResources();
         final Configuration conf = mResources.getConfiguration();
         mOrientation = conf.orientation;
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mLanguageSwitcher = new LanguageSwitcher(this);
         mLanguageSwitcher.loadLocales(prefs);
         mKeyboardSwitcher = KeyboardSwitcher.getInstance();

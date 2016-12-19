@@ -38,7 +38,8 @@ import android.view.inputmethod.EditorInfo;
 import java.util.List;
 import java.util.Locale;
 
-public class LatinKeyboard extends Keyboard {
+public class LatinKeyboard extends Keyboard
+{
 
     private static final boolean DEBUG_PREFERRED_LETTER = true;
     private static final String TAG = "HK-LatinKeyboard";
@@ -141,9 +142,9 @@ public class LatinKeyboard extends Keyboard {
         m123MicPreviewIcon = res.getDrawable(R.drawable.sym_keyboard_feedback_123_mic);
         mHintIcon = res.getDrawable(R.drawable.hint_popup);
         setDefaultBounds(m123MicPreviewIcon);
-        sSpacebarVerticalCorrection = res.getDimensionPixelOffset(
-                R.dimen.spacebar_vertical_correction);
+        sSpacebarVerticalCorrection = res.getDimensionPixelOffset(R.dimen.spacebar_vertical_correction);
         mIsAlphaKeyboard = xmlLayoutResId == R.xml.kbd_qwerty;
+
         mIsAlphaFullKeyboard = xmlLayoutResId == R.xml.kbd_full || xmlLayoutResId == R.xml.kbd_tablet;
         mIsFnFullKeyboard = xmlLayoutResId == R.xml.kbd_full_fn || xmlLayoutResId == R.xml.kbd_compact_fn;
         // The index of space key is available only after Keyboard constructor has finished.
@@ -153,24 +154,23 @@ public class LatinKeyboard extends Keyboard {
     }
 
     @Override
-    protected Key createKeyFromXml(Resources res, Row parent, int x, int y,
-            XmlResourceParser parser) {
+    protected Key createKeyFromXml(Resources res, Row parent, int x, int y, XmlResourceParser parser) {
         Key key = new LatinKey(res, parent, x, y, parser);
         if (key.codes == null) return key;
         switch (key.codes[0]) {
-        case LatinIME.ASCII_ENTER:
-            mEnterKey = key;
-            break;
-        case LatinKeyboardView.KEYCODE_F1:
-            mF1Key = key;
-            break;
-        case LatinIME.ASCII_SPACE:
-            mSpaceKey = key;
-            break;
-        case KEYCODE_MODE_CHANGE:
-            m123Key = key;
-            m123Label = key.label;
-            break;
+			case LatinIME.ASCII_ENTER:
+				mEnterKey = key;
+				break;
+			case LatinKeyboardView.KEYCODE_F1:
+				mF1Key = key;
+				break;
+			case LatinIME.ASCII_SPACE:
+				mSpaceKey = key;
+				break;
+			case KEYCODE_MODE_CHANGE:
+				m123Key = key;
+				m123Label = key.label;
+				break;
         }
 
         return key;
@@ -184,7 +184,7 @@ public class LatinKeyboard extends Keyboard {
             mEnterKey.popupCharacters = null;
             mEnterKey.popupResId = 0;
             mEnterKey.text = null;
-            switch (options&(EditorInfo.IME_MASK_ACTION|EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
+            switch (options & (EditorInfo.IME_MASK_ACTION | EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
 				case EditorInfo.IME_ACTION_SEARCH:
 					mEnterKey.iconPreview = res.getDrawable(R.drawable.sym_keyboard_feedback_search);
 					mEnterKey.icon = res.getDrawable(R.drawable.sym_keyboard_search);
@@ -213,7 +213,7 @@ public class LatinKeyboard extends Keyboard {
 					mEnterKey.label = null;
 					break;
 			}
-			
+
 			// Set the initial size of the preview icon
             if (mEnterKey.iconPreview != null) {
                 setDefaultBounds(mEnterKey.iconPreview);
@@ -236,7 +236,7 @@ public class LatinKeyboard extends Keyboard {
             mShiftKey.on = shiftState == SHIFT_ON || shiftState == SHIFT_LOCKED;
             mShiftKey.locked = shiftState == SHIFT_LOCKED || shiftState == SHIFT_CAPS_LOCKED;
             mShiftKey.icon = (shiftState == SHIFT_OFF || shiftState == SHIFT_ON || shiftState == SHIFT_LOCKED) ?
-                    mOldShiftIcon : mShiftLockIcon;
+				mOldShiftIcon : mShiftLockIcon;
             return super.setShiftState(shiftState, false);
         } else {
             return super.setShiftState(shiftState, true);
@@ -308,12 +308,25 @@ public class LatinKeyboard extends Keyboard {
                 }
             }
         } else if (mIsAlphaFullKeyboard) {
-        	if (mVoiceEnabled && mHasVoiceButton) {
-        		setMicF1Key(mF1Key);
-        	} else {
-        		setSettingsF1Key(mF1Key);
-        	}
-        } else if (mIsFnFullKeyboard) {
+			if (mMode == KeyboardSwitcher.MODE_URL) {
+                setNonMicF1Key(mF1Key, ".com", R.xml.popup_domains);
+			} else if (mMode == KeyboardSwitcher.MODE_EMAIL) {
+				setNonMicF1Key(mF1Key, "@", R.xml.popup_emals);
+			} else if (mMode == KeyboardSwitcher.MODE_IM) {
+				setNonMicF1Key(mF1Key, ":)", R.xml.popup_smileys);
+			} else if (mMode == KeyboardSwitcher.MODE_TEXT) {
+				if(LatinIME.sKeyboardSettings.keyboardMode > 2)
+					setNonMicF1Key(mF1Key, ".", R.xml.popup_punctuation);
+				else
+					setMicF1Key(mF1Key);
+			} else {
+				if (mVoiceEnabled && mHasVoiceButton) {
+					setMicF1Key(mF1Key);
+				} else {
+					setSettingsF1Key(mF1Key);
+				}
+			}
+		} else if (mIsFnFullKeyboard) {
     		setMicF1Key(mF1Key);        	
         } else {  // Symbols keyboard
             if (mVoiceEnabled && mHasVoiceButton) {
@@ -327,7 +340,7 @@ public class LatinKeyboard extends Keyboard {
     private void setMicF1Key(Key key) {
         // HACK: draw mMicIcon and mHintIcon at the same time
         final Drawable micWithSettingsHintDrawable = new BitmapDrawable(mRes,
-                drawSynthesizedSettingsHintImage(key.width, key.height, mMicIcon, mHintIcon));
+																		drawSynthesizedSettingsHintImage(key.width, key.height, mMicIcon, mHintIcon));
 
         if (key.popupResId == 0) {
             key.popupResId = R.xml.popup_mic;
@@ -335,8 +348,8 @@ public class LatinKeyboard extends Keyboard {
             key.modifier = true;
             if (key.label != null) {
                 key.popupCharacters = (key.popupCharacters == null) ?
-                        key.label + key.shiftLabel.toString() :
-                            key.label + key.shiftLabel.toString() + key.popupCharacters.toString();
+					key.label + key.shiftLabel.toString() :
+					key.label + key.shiftLabel.toString() + key.popupCharacters.toString();
             }
         }
         key.label = null;
@@ -352,14 +365,14 @@ public class LatinKeyboard extends Keyboard {
             return; // leave key otherwise unmodified
         }
         final Drawable settingsHintDrawable = new BitmapDrawable(mRes,
-                drawSynthesizedSettingsHintImage(key.width, key.height, mSettingsIcon, mHintIcon));
+																 drawSynthesizedSettingsHintImage(key.width, key.height, mSettingsIcon, mHintIcon));
     	key.label = null;
     	key.icon = settingsHintDrawable;
     	key.codes = new int[] { LatinKeyboardView.KEYCODE_OPTIONS };
     	key.popupResId = R.xml.popup_mic;
     	key.iconPreview = mSettingsPreviewIcon;
     }
-    
+
     private void setNonMicF1Key(Key key, String label, int popupResId) {
         if (key.shiftLabel != null) {
             key.codes = new int[] { key.label.charAt(0) };
@@ -397,12 +410,12 @@ public class LatinKeyboard extends Keyboard {
         // If application locales are explicitly selected.
         if (mLocale != null) {
             mSpaceKey.icon = new BitmapDrawable(mRes,
-                    drawSpaceBar(OPACITY_FULLY_OPAQUE, isAutoCompletion));
+												drawSpaceBar(OPACITY_FULLY_OPAQUE, isAutoCompletion));
         } else {
             // sym_keyboard_space_led can be shared with Black and White symbol themes.
             if (isAutoCompletion) {
                 mSpaceKey.icon = new BitmapDrawable(mRes,
-                        drawSpaceBar(OPACITY_FULLY_OPAQUE, isAutoCompletion));
+													drawSpaceBar(OPACITY_FULLY_OPAQUE, isAutoCompletion));
             } else {
                 mSpaceKey.icon = mRes.getDrawable(R.drawable.sym_keyboard_space);
             }
@@ -418,7 +431,7 @@ public class LatinKeyboard extends Keyboard {
 
     // Overlay two images: mainIcon and hintIcon.
     private Bitmap drawSynthesizedSettingsHintImage(
-            int width, int height, Drawable mainIcon, Drawable hintIcon) {
+		int width, int height, Drawable mainIcon, Drawable hintIcon) {
         if (mainIcon == null || hintIcon == null)
             return null;
         Rect hintIconPadding = new Rect(0, 0, 0, 0);
@@ -430,9 +443,9 @@ public class LatinKeyboard extends Keyboard {
         // Draw main icon at the center of the key visual
         // Assuming the hintIcon shares the same padding with the key's background drawable
         final int drawableX = (width + hintIconPadding.left - hintIconPadding.right
-                - mainIcon.getIntrinsicWidth()) / 2;
+			- mainIcon.getIntrinsicWidth()) / 2;
         final int drawableY = (height + hintIconPadding.top - hintIconPadding.bottom
-                - mainIcon.getIntrinsicHeight()) / 2;
+			- mainIcon.getIntrinsicHeight()) / 2;
         setDefaultBounds(mainIcon);
         canvas.translate(drawableX, drawableY);
         mainIcon.draw(canvas);
@@ -446,8 +459,8 @@ public class LatinKeyboard extends Keyboard {
 
     // Layout local language name and left and right arrow on space bar.
     private static String layoutSpaceBar(Paint paint, Locale locale, Drawable lArrow,
-            Drawable rArrow, int width, int height, float origTextSize,
-            boolean allowVariableTextSize) {
+										 Drawable rArrow, int width, int height, float origTextSize,
+										 boolean allowVariableTextSize) {
         final float arrowWidth = lArrow.getIntrinsicWidth();
         final float arrowHeight = lArrow.getIntrinsicHeight();
         final float maxTextWidth = width - (arrowWidth + arrowWidth);
@@ -464,7 +477,7 @@ public class LatinKeyboard extends Keyboard {
             textWidth = getTextWidth(paint, language, textSize, bounds);
             // If text size goes too small or text does not fit, use short name
             useShortName = textSize / origTextSize < MINIMUM_SCALE_OF_LANGUAGE_NAME
-                    || textWidth > maxTextWidth;
+				|| textWidth > maxTextWidth;
         } else {
             useShortName = textWidth > maxTextWidth;
             textSize = origTextSize;
@@ -482,7 +495,7 @@ public class LatinKeyboard extends Keyboard {
         final float remains = (width - textWidth) / 2;
         lArrow.setBounds((int)(remains - arrowWidth), top, (int)remains, (int)baseline);
         rArrow.setBounds((int)(remains + textWidth), top, (int)(remains + textWidth + arrowWidth),
-                (int)baseline);
+						 (int)baseline);
 
         return language;
     }
@@ -505,9 +518,9 @@ public class LatinKeyboard extends Keyboard {
             Locale locale = mLanguageSwitcher.getInputLocale();
             //Log.i("PCKeyboard", "input locale: " + locale);
             final String language = layoutSpaceBar(paint, locale,
-                    mButtonArrowLeftIcon, mButtonArrowRightIcon, width, height,
-                    getTextSizeFromTheme(android.R.style.TextAppearance_Small, 14),
-                    allowVariableTextSize);
+												   mButtonArrowLeftIcon, mButtonArrowRightIcon, width, height,
+												   getTextSizeFromTheme(android.R.style.TextAppearance_Small, 14),
+												   allowVariableTextSize);
 
             // Draw language text with shadow
             final int shadowColor = mRes.getColor(R.color.latinkeyboard_bar_language_shadow_white);
@@ -547,11 +560,11 @@ public class LatinKeyboard extends Keyboard {
 
     private int getSpacePreviewWidth() {
         final int width = Math.min(
-        		Math.max(mSpaceKey.width, (int)(getMinWidth() * SPACEBAR_POPUP_MIN_RATIO)), 
-        		(int)(getScreenHeight() * SPACEBAR_POPUP_MAX_RATIO));
+			Math.max(mSpaceKey.width, (int)(getMinWidth() * SPACEBAR_POPUP_MIN_RATIO)), 
+			(int)(getScreenHeight() * SPACEBAR_POPUP_MAX_RATIO));
         return width;
     }
-    
+
     private void updateLocaleDrag(int diff) {
         if (mSlidingLocaleIcon == null) {
             final int width = getSpacePreviewWidth();
@@ -571,7 +584,7 @@ public class LatinKeyboard extends Keyboard {
 
     public int getLanguageChangeDirection() {
         if (mSpaceKey == null || mLanguageSwitcher.getLocaleCount() < 2
-                || Math.abs(mSpaceDragLastDiff) < getSpacePreviewWidth() * SPACEBAR_DRAG_THRESHOLD) {
+			|| Math.abs(mSpaceDragLastDiff) < getSpacePreviewWidth() * SPACEBAR_DRAG_THRESHOLD) {
             return 0; // No change
         }
         return mSpaceDragLastDiff > 0 ? 1 : -1;
@@ -580,13 +593,13 @@ public class LatinKeyboard extends Keyboard {
     public void setLanguageSwitcher(LanguageSwitcher switcher, boolean isAutoCompletion) {
         mLanguageSwitcher = switcher;
         Locale locale = mLanguageSwitcher.getLocaleCount() > 0
-                ? mLanguageSwitcher.getInputLocale()
-                : null;
+			? mLanguageSwitcher.getInputLocale()
+			: null;
         // If the language count is 1 and is the same as the system language, don't show it.
         if (locale != null
-                && mLanguageSwitcher.getLocaleCount() == 1
-                && mLanguageSwitcher.getSystemLocale().getLanguage()
-                   .equalsIgnoreCase(locale.getLanguage())) {
+			&& mLanguageSwitcher.getLocaleCount() == 1
+			&& mLanguageSwitcher.getSystemLocale().getLanguage()
+			.equalsIgnoreCase(locale.getLanguage())) {
             locale = null;
         }
         mLocale = locale;
@@ -621,7 +634,7 @@ public class LatinKeyboard extends Keyboard {
     boolean isInside(LatinKey key, int x, int y) {
         final int code = key.codes[0];
         if (code == KEYCODE_SHIFT ||
-                code == KEYCODE_DELETE) {
+			code == KEYCODE_DELETE) {
         	// Adjust target area for these keys
             y -= key.height / 10;
             if (code == KEYCODE_SHIFT) {
@@ -683,7 +696,7 @@ public class LatinKeyboard extends Keyboard {
                             if (k != key && inPrefList(k.codes[0], pref)) {
                                 final int dist = distanceFrom(k, x, y);
                                 if (dist < (int) (k.width * OVERLAP_PERCENTAGE_LOW_PROB) &&
-                                        (pref[k.codes[0]] > pref[mPrefLetter] * 3))  {
+									(pref[k.codes[0]] > pref[mPrefLetter] * 3))  {
                                     mPrefLetter = k.codes[0];
                                     mPrefDistance = dist;
                                     if (DEBUG_PREFERRED_LETTER) {
@@ -711,7 +724,7 @@ public class LatinKeyboard extends Keyboard {
                     if (inPrefList(k.codes[0], pref)) {
                         final int dist = distanceFrom(k, x, y);
                         if (dist < (int) (k.width * OVERLAP_PERCENTAGE_HIGH_PROB)
-                                && dist < mPrefDistance)  {
+							&& dist < mPrefDistance)  {
                             mPrefLetter = k.codes[0];
                             mPrefLetterX = x;
                             mPrefLetterY = y;
@@ -754,7 +767,7 @@ public class LatinKeyboard extends Keyboard {
         } else {
             // Avoid dead pixels at edges of the keyboard
             return super.getNearestKeys(Math.max(0, Math.min(x, getMinWidth() - 1)),
-                    Math.max(0, Math.min(y, getHeight() - 1)));
+										Math.max(0, Math.min(y, getHeight() - 1)));
         }
     }
 
@@ -769,7 +782,7 @@ public class LatinKeyboard extends Keyboard {
 
     private int getTextSizeFromTheme(int style, int defValue) {
         TypedArray array = mContext.getTheme().obtainStyledAttributes(
-                style, new int[] { android.R.attr.textSize });
+			style, new int[] { android.R.attr.textSize });
         int resId = array.getResourceId(0, 0);
         if (resId >= array.length()) {
             Log.i(TAG, "getTextSizeFromTheme error: resId " + resId + " > " + array.length());
@@ -780,21 +793,22 @@ public class LatinKeyboard extends Keyboard {
     }
 
     // TODO LatinKey could be static class
-    class LatinKey extends Key {
+    class LatinKey extends Key
+	{
 
         // functional normal state (with properties)
         private final int[] KEY_STATE_FUNCTIONAL_NORMAL = {
-                android.R.attr.state_single
+			android.R.attr.state_single
         };
 
         // functional pressed state (with properties)
         private final int[] KEY_STATE_FUNCTIONAL_PRESSED = {
-                android.R.attr.state_single,
-                android.R.attr.state_pressed
+			android.R.attr.state_single,
+			android.R.attr.state_pressed
         };
 
         public LatinKey(Resources res, Keyboard.Row parent, int x, int y,
-                XmlResourceParser parser) {
+						XmlResourceParser parser) {
             super(res, parent, x, y, parser);
         }
 
@@ -846,7 +860,8 @@ public class LatinKeyboard extends Keyboard {
      * languages by swiping the spacebar. It draws the current, previous and
      * next languages and moves them by the delta of touch movement on the spacebar.
      */
-    class SlidingLocaleDrawable extends Drawable {
+    class SlidingLocaleDrawable extends Drawable
+	{
 
         private final int mWidth;
         private final int mHeight;
@@ -875,9 +890,9 @@ public class LatinKeyboard extends Keyboard {
             mTextPaint.setAntiAlias(true);
             mMiddleX = (mWidth - mBackground.getIntrinsicWidth()) / 2;
             mLeftDrawable =
-                    mRes.getDrawable(R.drawable.sym_keyboard_feedback_language_arrows_left);
+				mRes.getDrawable(R.drawable.sym_keyboard_feedback_language_arrows_left);
             mRightDrawable =
-                    mRes.getDrawable(R.drawable.sym_keyboard_feedback_language_arrows_right);
+				mRes.getDrawable(R.drawable.sym_keyboard_feedback_language_arrows_right);
             mThreshold = ViewConfiguration.get(mContext).getScaledTouchSlop();
         }
 
@@ -924,7 +939,7 @@ public class LatinKeyboard extends Keyboard {
 
                 setDefaultBounds(lArrow);
                 rArrow.setBounds(width - rArrow.getIntrinsicWidth(), 0, width,
-                        rArrow.getIntrinsicHeight());
+								 rArrow.getIntrinsicHeight());
                 lArrow.draw(canvas);
                 rArrow.draw(canvas);
             }
