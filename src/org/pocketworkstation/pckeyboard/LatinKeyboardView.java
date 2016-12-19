@@ -89,6 +89,18 @@ public class LatinKeyboardView extends LatinKeyboardBaseView {
     static final int KEYCODE_FKEY_F12 = -142;
     static final int KEYCODE_NUM_LOCK = -143;
 
+	// Новые клавиши
+	static final int KEYCODE_COPY = -1000;
+	static final int KEYCODE_CUT = -1001;
+	static final int KEYCODE_PASTE = -1002;
+	static final int KEYCODE_SELECT_ALL = -1003;
+
+	// Settings key
+	static final int KEYCODE_TOGGLE_ROW = -1004;
+	static final int KEYCODE_SHOW_HINT = -1005;
+	static final int KEYCODE_SHOW_SUGGEST = -1006;
+	static final int KEYCODE_LAYOUT_CHANTE = -1007;
+	
     private Keyboard mPhoneKeyboard;
 
     /** Whether the extension of this keyboard is visible */

@@ -1944,161 +1944,186 @@ public class LatinIME extends InputMethodService implements
     // Implementation of KeyboardViewListener
 
     public void onKey(int primaryCode, int[] keyCodes, int x, int y) {
+		InputConnection ic = getCurrentInputConnection();
         long when = SystemClock.uptimeMillis();
         if (primaryCode != Keyboard.KEYCODE_DELETE
-                || when > mLastKeyTime + QUICK_PRESS) {
+			|| when > mLastKeyTime + QUICK_PRESS) {
             mDeleteCount = 0;
         }
         mLastKeyTime = when;
         final boolean distinctMultiTouch = mKeyboardSwitcher
-                .hasDistinctMultitouch();
+			.hasDistinctMultitouch();
         switch (primaryCode) {
-        case Keyboard.KEYCODE_DELETE:
-            if (processMultiKey(primaryCode)) {
-                break;
-            }
-            handleBackspace();
-            mDeleteCount++;
-            LatinImeLogger.logOnDelete();
-            break;
-        case Keyboard.KEYCODE_SHIFT:
-            // Shift key is handled in onPress() when device has distinct
-            // multi-touch panel.
-            if (!distinctMultiTouch)
-                handleShift();
-            break;
-        case Keyboard.KEYCODE_MODE_CHANGE:
-            // Symbol key is handled in onPress() when device has distinct
-            // multi-touch panel.
-            if (!distinctMultiTouch)
-                changeKeyboardMode();
-            break;
-        case LatinKeyboardView.KEYCODE_CTRL_LEFT:
-            // Ctrl key is handled in onPress() when device has distinct
-            // multi-touch panel.
-            if (!distinctMultiTouch)
-                setModCtrl(!mModCtrl);
-            break;
-        case LatinKeyboardView.KEYCODE_ALT_LEFT:
-            // Alt key is handled in onPress() when device has distinct
-            // multi-touch panel.
-            if (!distinctMultiTouch)
-                setModAlt(!mModAlt);
-            break;
-        case LatinKeyboardView.KEYCODE_META_LEFT:
-            // Meta key is handled in onPress() when device has distinct
-            // multi-touch panel.
-            if (!distinctMultiTouch)
-                setModMeta(!mModMeta);
-            break;
-        case LatinKeyboardView.KEYCODE_FN:
-            if (!distinctMultiTouch)
-                setModFn(!mModFn);
-            break;
-        case Keyboard.KEYCODE_CANCEL:
-            if (!isShowingOptionDialog()) {
-                handleClose();
-            }
-            break;
-        case LatinKeyboardView.KEYCODE_OPTIONS:
-            onOptionKeyPressed();
-            break;
-        case LatinKeyboardView.KEYCODE_OPTIONS_LONGPRESS:
-            onOptionKeyLongPressed();
-            break;
-        case LatinKeyboardView.KEYCODE_COMPOSE:
-            mComposeMode = !mComposeMode;
-            mComposeBuffer.clear();
-            break;
-        case LatinKeyboardView.KEYCODE_NEXT_LANGUAGE:
-            toggleLanguage(false, true);
-            break;
-        case LatinKeyboardView.KEYCODE_PREV_LANGUAGE:
-            toggleLanguage(false, false);
-            break;
-        case LatinKeyboardView.KEYCODE_VOICE:
-            if (mVoiceRecognitionTrigger.isInstalled()) {
-                mVoiceRecognitionTrigger.startVoiceRecognition();
-            }
-            //startListening(false /* was a button press, was not a swipe */);
-            break;
-        case 9 /* Tab */:
-            if (processMultiKey(primaryCode)) {
-                break;
-            }
-            sendTab();
-            break;
-        case LatinKeyboardView.KEYCODE_ESCAPE:
-            if (processMultiKey(primaryCode)) {
-                break;
-            }
-            sendEscape();
-            break;
-        case LatinKeyboardView.KEYCODE_DPAD_UP:
-        case LatinKeyboardView.KEYCODE_DPAD_DOWN:
-        case LatinKeyboardView.KEYCODE_DPAD_LEFT:
-        case LatinKeyboardView.KEYCODE_DPAD_RIGHT:
-        case LatinKeyboardView.KEYCODE_DPAD_CENTER:
-        case LatinKeyboardView.KEYCODE_HOME:
-        case LatinKeyboardView.KEYCODE_END:
-        case LatinKeyboardView.KEYCODE_PAGE_UP:
-        case LatinKeyboardView.KEYCODE_PAGE_DOWN:
-        case LatinKeyboardView.KEYCODE_FKEY_F1:
-        case LatinKeyboardView.KEYCODE_FKEY_F2:
-        case LatinKeyboardView.KEYCODE_FKEY_F3:
-        case LatinKeyboardView.KEYCODE_FKEY_F4:
-        case LatinKeyboardView.KEYCODE_FKEY_F5:
-        case LatinKeyboardView.KEYCODE_FKEY_F6:
-        case LatinKeyboardView.KEYCODE_FKEY_F7:
-        case LatinKeyboardView.KEYCODE_FKEY_F8:
-        case LatinKeyboardView.KEYCODE_FKEY_F9:
-        case LatinKeyboardView.KEYCODE_FKEY_F10:
-        case LatinKeyboardView.KEYCODE_FKEY_F11:
-        case LatinKeyboardView.KEYCODE_FKEY_F12:
-        case LatinKeyboardView.KEYCODE_FORWARD_DEL:
-        case LatinKeyboardView.KEYCODE_INSERT:
-        case LatinKeyboardView.KEYCODE_SYSRQ:
-        case LatinKeyboardView.KEYCODE_BREAK:
-        case LatinKeyboardView.KEYCODE_NUM_LOCK:
-        case LatinKeyboardView.KEYCODE_SCROLL_LOCK:
-            if (processMultiKey(primaryCode)) {
-                break;
-            }
-            // send as plain keys, or as escape sequence if needed
-            sendSpecialKey(-primaryCode);
-            break;
-        default:
-            if (!mComposeMode && mDeadKeysActive && Character.getType(primaryCode) == Character.NON_SPACING_MARK) {
-                //Log.i(TAG, "possible dead character: " + primaryCode);
-                if (!mDeadAccentBuffer.execute(primaryCode)) {
-                    //Log.i(TAG, "double dead key");
-                    break; // pressing a dead key twice produces spacing equivalent
-                }
-                updateShiftKeyState(getCurrentInputEditorInfo());
-                break;
-            }
-            if (processMultiKey(primaryCode)) {
-                break;
-            }
-            if (primaryCode != ASCII_ENTER) {
-                mJustAddedAutoSpace = false;
-            }
-            RingCharBuffer.getInstance().push((char) primaryCode, x, y);
-            LatinImeLogger.logOnInputChar();
-            if (isWordSeparator(primaryCode)) {
-                handleSeparator(primaryCode);
-            } else {
-                handleCharacter(primaryCode, keyCodes);
-            }
-            // Cancel the just reverted state
-            mJustRevertedSeparator = null;
+			case Keyboard.KEYCODE_DELETE:
+				if (processMultiKey(primaryCode)) {
+					break;
+				}
+				handleBackspace();
+				mDeleteCount++;
+				LatinImeLogger.logOnDelete();
+				break;
+			case Keyboard.KEYCODE_SHIFT:
+				// Shift key is handled in onPress() when device has distinct
+				// multi-touch panel.
+				if (!distinctMultiTouch)
+					handleShift();
+				break;
+			case Keyboard.KEYCODE_MODE_CHANGE:
+				// Symbol key is handled in onPress() when device has distinct
+				// multi-touch panel.
+				if (!distinctMultiTouch)
+					changeKeyboardMode();
+				break;
+			case LatinKeyboardView.KEYCODE_CTRL_LEFT:
+				// Ctrl key is handled in onPress() when device has distinct
+				// multi-touch panel.
+				if (!distinctMultiTouch)
+					setModCtrl(!mModCtrl);
+				break;
+			case LatinKeyboardView.KEYCODE_ALT_LEFT:
+				// Alt key is handled in onPress() when device has distinct
+				// multi-touch panel.
+				if (!distinctMultiTouch)
+					setModAlt(!mModAlt);
+				break;
+			case LatinKeyboardView.KEYCODE_META_LEFT:
+				// Meta key is handled in onPress() when device has distinct
+				// multi-touch panel.
+				if (!distinctMultiTouch)
+					setModMeta(!mModMeta);
+				break;
+			case LatinKeyboardView.KEYCODE_FN:
+				if (!distinctMultiTouch)
+					setModFn(!mModFn);
+				break;
+			case Keyboard.KEYCODE_CANCEL:
+				if (!isShowingOptionDialog()) {
+					handleClose();
+				}
+				break;
+			case LatinKeyboardView.KEYCODE_OPTIONS:
+				onOptionKeyPressed();
+				break;
+			case LatinKeyboardView.KEYCODE_OPTIONS_LONGPRESS:
+				onOptionKeyLongPressed();
+				break;
+			case LatinKeyboardView.KEYCODE_COMPOSE:
+				mComposeMode = !mComposeMode;
+				mComposeBuffer.clear();
+				break;
+			case LatinKeyboardView.KEYCODE_NEXT_LANGUAGE:
+				toggleLanguage(false, true);
+				break;
+			case LatinKeyboardView.KEYCODE_PREV_LANGUAGE:
+				toggleLanguage(false, false);
+				break;
+			case LatinKeyboardView.KEYCODE_VOICE:
+				if (mVoiceRecognitionTrigger.isInstalled()) {
+					mVoiceRecognitionTrigger.startVoiceRecognition();
+				}
+				//startListening(false /* was a button press, was not a swipe */);
+				break;
+			case 9 /* Tab */:
+				if (processMultiKey(primaryCode)) {
+					break;
+				}
+				sendTab();
+				break;
+			case LatinKeyboardView.KEYCODE_ESCAPE:
+				if (processMultiKey(primaryCode)) {
+					break;
+				}
+				sendEscape();
+				break;
+			case LatinKeyboardView.KEYCODE_DPAD_UP:
+			case LatinKeyboardView.KEYCODE_DPAD_DOWN:
+			case LatinKeyboardView.KEYCODE_DPAD_LEFT:
+			case LatinKeyboardView.KEYCODE_DPAD_RIGHT:
+			case LatinKeyboardView.KEYCODE_DPAD_CENTER:
+			case LatinKeyboardView.KEYCODE_HOME:
+			case LatinKeyboardView.KEYCODE_END:
+			case LatinKeyboardView.KEYCODE_PAGE_UP:
+			case LatinKeyboardView.KEYCODE_PAGE_DOWN:
+			case LatinKeyboardView.KEYCODE_FKEY_F1:
+			case LatinKeyboardView.KEYCODE_FKEY_F2:
+			case LatinKeyboardView.KEYCODE_FKEY_F3:
+			case LatinKeyboardView.KEYCODE_FKEY_F4:
+			case LatinKeyboardView.KEYCODE_FKEY_F5:
+			case LatinKeyboardView.KEYCODE_FKEY_F6:
+			case LatinKeyboardView.KEYCODE_FKEY_F7:
+			case LatinKeyboardView.KEYCODE_FKEY_F8:
+			case LatinKeyboardView.KEYCODE_FKEY_F9:
+			case LatinKeyboardView.KEYCODE_FKEY_F10:
+			case LatinKeyboardView.KEYCODE_FKEY_F11:
+			case LatinKeyboardView.KEYCODE_FKEY_F12:
+			case LatinKeyboardView.KEYCODE_FORWARD_DEL:
+			case LatinKeyboardView.KEYCODE_INSERT:
+			case LatinKeyboardView.KEYCODE_SYSRQ:
+			case LatinKeyboardView.KEYCODE_BREAK:
+			case LatinKeyboardView.KEYCODE_NUM_LOCK:
+			case LatinKeyboardView.KEYCODE_SCROLL_LOCK:
+				if (processMultiKey(primaryCode)) {
+					break;
+				}
+				// send as plain keys, or as escape sequence if needed
+				sendSpecialKey(-primaryCode);
+				break;
+			case LatinKeyboardView.KEYCODE_COPY:
+				sendHardwareSequence(ic, KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.KEYCODE_C);
+				break;
+			case LatinKeyboardView.KEYCODE_CUT:
+				sendHardwareSequence(ic, KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.KEYCODE_X);
+				break;
+			case LatinKeyboardView.KEYCODE_PASTE:
+				sendHardwareSequence(ic, KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.KEYCODE_V);
+				break;
+			case LatinKeyboardView.KEYCODE_SELECT_ALL:
+				sendHardwareSequence(ic, KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.KEYCODE_A);
+				break;
+			case LatinKeyboardView.KEYCODE_TOGGLE_ROW:
+				doSwipeAction("extension");
+				break;
+			case LatinKeyboardView.KEYCODE_SHOW_SUGGEST:
+				doSwipeAction("suggestions");
+				break;
+			case LatinKeyboardView.KEYCODE_SHOW_HINT:
+				onShowHintKeyPressed();
+				break;
+			case LatinKeyboardView.KEYCODE_LAYOUT_CHANTE:
+				showChooseKeyboardLayout();
+				break;
+			default:
+				if (!mComposeMode && mDeadKeysActive && Character.getType(primaryCode) == Character.NON_SPACING_MARK) {
+					//Log.i(TAG, "possible dead character: " + primaryCode);
+					if (!mDeadAccentBuffer.execute(primaryCode)) {
+						//Log.i(TAG, "double dead key");
+						break; // pressing a dead key twice produces spacing equivalent
+					}
+					updateShiftKeyState(getCurrentInputEditorInfo());
+					break;
+				}
+				if (processMultiKey(primaryCode)) {
+					break;
+				}
+				if (primaryCode != ASCII_ENTER) {
+					mJustAddedAutoSpace = false;
+				}
+				RingCharBuffer.getInstance().push((char) primaryCode, x, y);
+				LatinImeLogger.logOnInputChar();
+				if (isWordSeparator(primaryCode)) {
+					handleSeparator(primaryCode);
+				} else {
+					handleCharacter(primaryCode, keyCodes);
+				}
+				// Cancel the just reverted state
+				mJustRevertedSeparator = null;
         }
         mKeyboardSwitcher.onKey(primaryCode);
         // Reset after any single keystroke
         mEnteredText = null;
         //mDeadAccentBuffer.clear();  // FIXME
     }
-
+	
     public void onText(CharSequence text) {
         //mDeadAccentBuffer.clear();  // FIXME
         InputConnection ic = getCurrentInputConnection();
@@ -3619,4 +3644,140 @@ public class LatinIME extends InputMethodService implements
             val = 75;
         return val;
     }
+	
+	/*******************************************************
+	 * НОВЫЕ МЕТОДЫ И ПЕРЕМЕННЫЕ
+	 ******************************************************/
+	// Диалог настроек доп. строки
+	private static final int POS_LABELHINT = 2;
+	private AlertDialog mShowHintDialog;
+	
+	// Обработка горячих клавиш Ctrl + c/v/x
+	public final KeyEvent generateHardwareEvent(int action, int code, int meta) {
+		return new KeyEvent(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+							action, code, 0, meta, 0, 0,
+							KeyEvent.FLAG_KEEP_TOUCH_MODE | KeyEvent.FLAG_VIRTUAL_HARD_KEY);
+	}
+
+	public int getModifier(int code) {
+		if (KeyEvent.isModifierKey(code)) {
+			switch (code) {
+				case KeyEvent.KEYCODE_ALT_LEFT:
+				case KeyEvent.KEYCODE_ALT_RIGHT:
+					return KeyEvent.META_ALT_ON;
+				case KeyEvent.KEYCODE_CTRL_LEFT:
+				case KeyEvent.KEYCODE_CTRL_RIGHT:
+					return KeyEvent.META_CTRL_ON;
+				case KeyEvent.KEYCODE_SHIFT_LEFT:
+				case KeyEvent.KEYCODE_SHIFT_RIGHT:
+					return KeyEvent.META_SHIFT_ON;
+			}
+		}
+		return 0;
+	}
+
+	public final void sendHardwareSequence(InputConnection ic, Integer... vals) {
+		int meta = 0;
+		for (int i = 0; i < vals.length; i++) {
+			int code = vals[i];
+			ic.sendKeyEvent(generateHardwareEvent(KeyEvent.ACTION_DOWN, code, meta));
+			meta |= getModifier(code);
+		}
+		for (int i = vals.length - 1; i >= 0; i--) {
+			int code = vals[i];
+			ic.sendKeyEvent(generateHardwareEvent(KeyEvent.ACTION_UP, code, meta));
+			meta = rem(meta, getModifier(code));
+		}
+	}
+
+	public static boolean has(int val, int flag) {
+		return (val & flag) > 0;
+	}
+
+	public static int rem(int val, int flag) {
+		if (has(val, flag)) {
+			return val ^ flag;
+		}
+		return val;
+	}
+
+	/*******************************************************
+	 * Диалог настройки доп. символов
+	 ******************************************************/
+	private void onShowHintKeyPressed() {
+		if (!isShowingHintDialog()) {
+			showChooseHint();
+		}
+	}
+
+	private boolean isShowingHintDialog() {
+		return mShowHintDialog != null && mShowHintDialog.isShowing();
+	}
+
+	private void showChooseHint() {
+		Resources res = getResources();
+		final String[] mChooseHint = res.getStringArray(R.array.hint_modes);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setCancelable(true);
+		builder.setIcon(R.drawable.sym_keyboard_numalt);
+		builder.setTitle(res.getString(R.string.title_hint_mode));
+		builder.setNegativeButton(android.R.string.cancel, null);
+		builder.setItems(mChooseHint, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface di, int position) {
+					di.dismiss();
+					LatinIME.sKeyboardSettings.hintMode = position;
+					updateKeyboardOptions();
+					mKeyboardSwitcher.makeKeyboards(true);
+					reloadKeyboards();
+				}
+			});
+		showAlertDialog(builder);
+	}
+
+	/*******************************************************
+	 * Показать AlertDialog
+	 ******************************************************/
+	private void showAlertDialog(AlertDialog.Builder builder) {
+		mOptionsDialog = builder.create();
+		Window window = mOptionsDialog.getWindow();
+		WindowManager.LayoutParams lp = window.getAttributes();
+		lp.token = mKeyboardSwitcher.getInputView().getWindowToken();
+		lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+		window.setAttributes(lp);
+		window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+		mOptionsDialog.show();
+	}
+
+	/*******************************************************
+	 * Меню переключение раскладки
+	 ******************************************************/
+	private void showChooseKeyboardLayout() {
+		Resources res = getResources();
+		final String[] mChooseLayout = res.getStringArray(R.array.keyboard_mode_entries);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setCancelable(true);
+		builder.setIcon(R.drawable.ic_subtype_keyboard);
+		builder.setTitle(res.getString(R.string.title_keyboard_layout_change));
+		builder.setNegativeButton(android.R.string.cancel, null);
+		builder.setItems(mChooseLayout, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface di, int position) {
+					di.dismiss();
+					if (isPortrait()) {
+						LatinIME.sKeyboardSettings.keyboardModePortrait = position;
+					} else {
+						LatinIME.sKeyboardSettings.keyboardModeLandscape = position;
+					}
+					//toggleLanguage(true, true);
+
+					//LatinIME.sKeyboardSettings.keyboardMode = position;
+					updateKeyboardOptions();
+					mKeyboardSwitcher.makeKeyboards(true);
+					reloadKeyboards();
+				}
+			});
+		showAlertDialog(builder);
+	}
 }

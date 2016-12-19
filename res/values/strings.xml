@@ -678,4 +678,8 @@
     <string name="seek_pref_0">0%</string>
     <string name="seek_pref_val">x%</string>
     <string name="seek_pref_max">100%</string>
+
+	<!--===== НОВЫЕ СТРОКИ =====-->
+	<!--Заголовок диалога смены раскладки-->
+	<string name="title_keyboard_layout_change">Keyboard layout</string>
 </resources>
