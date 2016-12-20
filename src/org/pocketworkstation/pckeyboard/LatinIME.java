@@ -137,7 +137,7 @@ public class LatinIME extends InputMethodService implements
     static final String PREF_VOL_DOWN = "pref_vol_down";
 
     private static final int MSG_UPDATE_SUGGESTIONS = 0;
-    private static final int MSG_START_TUTORIAL = 1;
+//    private static final int MSG_START_TUTORIAL = 1;
     private static final int MSG_UPDATE_SHIFT_STATE = 2;
     private static final int MSG_VOICE_RESULTS = 3;
     private static final int MSG_UPDATE_OLD_SUGGESTIONS = 4;
@@ -2460,6 +2460,8 @@ public class LatinIME extends InputMethodService implements
         return isPredictionOn();
     }
 
+/** Dont use
+
     private void switchToKeyboardView() {
         mHandler.post(new Runnable() {
             public void run() {
@@ -2477,6 +2479,7 @@ public class LatinIME extends InputMethodService implements
             }
         });
     }
+*/
 
     private void clearSuggestions() {
         setSuggestions(null, false, false, false);
@@ -2922,8 +2925,7 @@ public class LatinIME extends InputMethodService implements
         int currentKeyboardMode = mKeyboardSwitcher.getKeyboardMode();
         reloadKeyboards();
         mKeyboardSwitcher.makeKeyboards(true);
-        mKeyboardSwitcher.setKeyboardMode(currentKeyboardMode, 0,
-                mEnableVoiceButton && mEnableVoice);
+        mKeyboardSwitcher.setKeyboardMode(currentKeyboardMode, 0, mEnableVoiceButton && mEnableVoice);
         initSuggest(mLanguageSwitcher.getInputLanguage());
         mLanguageSwitcher.persist();
         mAutoCapActive = mAutoCapPref && mLanguageSwitcher.allowAutoCap();

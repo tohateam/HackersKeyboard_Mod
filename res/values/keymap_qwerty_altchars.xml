@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="alt_key_q">1й</string>
+    <string name="alt_key_w">2ц</string>
+    <string name="alt_key_e">3у</string>
+    <string name="alt_key_r">4к</string>
+    <string name="alt_key_t">5её</string>
+    <string name="alt_key_y">6н</string>
+    <string name="alt_key_u">7г</string>
+    <string name="alt_key_i">8ш</string>
+    <string name="alt_key_o">9щ</string>
+    <string name="alt_key_p">0з</string>
+
+    <string name="alt_key_a">\@фáàâãäåāæ</string>
+	<string name="alt_key_s">\#ыſ§ßšşśŝ</string>
+    <string name="alt_key_d">$вđďð</string>
+    <string name="alt_key_f">%а₣</string>
+    <string name="alt_key_g">&amp;пģğĝġ</string>
+    <string name="alt_key_h">-рĥ</string>
+    <string name="alt_key_j">+оĵ</string>
+    <string name="alt_key_k">(лĸķ</string>
+    <string name="alt_key_l">)д£₤λ</string>
+	
+    <string name="alt_key_z">*яžżź</string>
+    <string name="alt_key_x">\"ч</string>
+    <string name="alt_key_c">\'сĉçčć¢</string>
+    <string name="alt_key_v">:м</string>
+    <string name="alt_key_b">;и</string>
+    <string name="alt_key_n">!тňŉŋńņñ</string>
+    <string name="alt_key_m">\?ьъ¿μ</string>
+
+	<string name="alt_key_singleQuot">|э</string>
+	<string name="alt_key_comma">&lt;б</string>
+	<string name="alt_key_dot">&gt;ю</string>
+    <string name="alt_key_bksl">\\х</string>
+	
+</resources>

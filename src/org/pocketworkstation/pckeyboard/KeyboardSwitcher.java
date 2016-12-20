@@ -44,16 +44,16 @@ SharedPreferences.OnSharedPreferenceChangeListener
 
     // Main keyboard layouts without the settings key
     public static final int KEYBOARDMODE_NORMAL = R.id.mode_normal;
-    public static final int KEYBOARDMODE_URL = R.id.mode_url;
-    public static final int KEYBOARDMODE_EMAIL = R.id.mode_email;
-    public static final int KEYBOARDMODE_IM = R.id.mode_im;
-    public static final int KEYBOARDMODE_WEB = R.id.mode_webentry;
+//    public static final int KEYBOARDMODE_URL = R.id.mode_url;
+//    public static final int KEYBOARDMODE_EMAIL = R.id.mode_email;
+//    public static final int KEYBOARDMODE_IM = R.id.mode_im;
+//    public static final int KEYBOARDMODE_WEB = R.id.mode_webentry;
     // Main keyboard layouts with the settings key
-    public static final int KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY = R.id.mode_normal_with_settings_key;
-    public static final int KEYBOARDMODE_URL_WITH_SETTINGS_KEY = R.id.mode_url_with_settings_key;
-    public static final int KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY = R.id.mode_email_with_settings_key;
-    public static final int KEYBOARDMODE_IM_WITH_SETTINGS_KEY = R.id.mode_im_with_settings_key;
-    public static final int KEYBOARDMODE_WEB_WITH_SETTINGS_KEY = R.id.mode_webentry_with_settings_key;
+//    public static final int KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY = R.id.mode_normal_with_settings_key;
+//    public static final int KEYBOARDMODE_URL_WITH_SETTINGS_KEY = R.id.mode_url_with_settings_key;
+//    public static final int KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY = R.id.mode_email_with_settings_key;
+//    public static final int KEYBOARDMODE_IM_WITH_SETTINGS_KEY = R.id.mode_im_with_settings_key;
+//    public static final int KEYBOARDMODE_WEB_WITH_SETTINGS_KEY = R.id.mode_webentry_with_settings_key;
 
     // Symbols keyboard layout without the settings key
     public static final int KEYBOARDMODE_SYMBOLS = R.id.mode_symbols;
@@ -84,12 +84,13 @@ SharedPreferences.OnSharedPreferenceChangeListener
 
     private LatinKeyboardView mInputView;
     private static final int[] ALPHABET_MODES = { KEYBOARDMODE_NORMAL,
-		KEYBOARDMODE_URL, KEYBOARDMODE_EMAIL, KEYBOARDMODE_IM,
-		KEYBOARDMODE_WEB, KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY,
-		KEYBOARDMODE_URL_WITH_SETTINGS_KEY,
-		KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY,
-		KEYBOARDMODE_IM_WITH_SETTINGS_KEY,
-		KEYBOARDMODE_WEB_WITH_SETTINGS_KEY };
+//		KEYBOARDMODE_URL, KEYBOARDMODE_EMAIL, KEYBOARDMODE_IM, KEYBOARDMODE_WEB, 
+//		KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY
+//		KEYBOARDMODE_URL_WITH_SETTINGS_KEY,
+//		KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY,
+//		KEYBOARDMODE_IM_WITH_SETTINGS_KEY,
+//		KEYBOARDMODE_WEB_WITH_SETTINGS_KEY 
+	};
 
     private LatinIME mInputMethodService;
 
@@ -389,36 +390,35 @@ SharedPreferences.OnSharedPreferenceChangeListener
         }
         switch (mode) {
 			case MODE_NONE:
-				LatinImeLogger.logOnWarning("getKeyboardId:" + mode + ","
-											+ imeOptions + "," + isSymbols);
+				LatinImeLogger.logOnWarning("getKeyboardId:" + mode + "," + imeOptions + "," + isSymbols);
 				/* fall through */
 			case MODE_TEXT:
-				return new KeyboardId(keyboardRowsResId,
-									  mHasSettingsKey ? KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY
-									  : KEYBOARDMODE_NORMAL, true, hasVoice);
+				return new KeyboardId(keyboardRowsResId, KEYBOARDMODE_NORMAL, true, hasVoice);
 			case MODE_SYMBOLS:
 				return new KeyboardId(KBD_SYMBOLS,
 									  mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
 									  : KEYBOARDMODE_SYMBOLS, false, hasVoice);
 			case MODE_PHONE:
 				return new KeyboardId(KBD_PHONE, 0, false, hasVoice);
-			case MODE_URL:
-				return new KeyboardId(keyboardRowsResId,
-									  mHasSettingsKey ? KEYBOARDMODE_URL_WITH_SETTINGS_KEY
-									  : KEYBOARDMODE_URL, true, hasVoice);
-			case MODE_EMAIL:
-				return new KeyboardId(keyboardRowsResId,
-									  mHasSettingsKey ? KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY
-									  : KEYBOARDMODE_EMAIL, true, hasVoice);
-			case MODE_IM:
-				return new KeyboardId(keyboardRowsResId,
-									  mHasSettingsKey ? KEYBOARDMODE_IM_WITH_SETTINGS_KEY
-									  : KEYBOARDMODE_IM, true, hasVoice);
-			case MODE_WEB:
-				return new KeyboardId(keyboardRowsResId,
-									  mHasSettingsKey ? KEYBOARDMODE_WEB_WITH_SETTINGS_KEY
-									  : KEYBOARDMODE_WEB, true, hasVoice);
-        }
+				/**
+				 case MODE_URL:
+				 return new KeyboardId(keyboardRowsResId,
+				 mHasSettingsKey ? KEYBOARDMODE_URL_WITH_SETTINGS_KEY
+				 : KEYBOARDMODE_URL, true, hasVoice);
+				 case MODE_EMAIL:
+				 return new KeyboardId(keyboardRowsResId,
+				 mHasSettingsKey ? KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY
+				 : KEYBOARDMODE_EMAIL, true, hasVoice);
+				 case MODE_IM:
+				 return new KeyboardId(keyboardRowsResId,
+				 mHasSettingsKey ? KEYBOARDMODE_IM_WITH_SETTINGS_KEY
+				 : KEYBOARDMODE_IM, true, hasVoice);
+				 case MODE_WEB:
+				 return new KeyboardId(keyboardRowsResId,
+				 mHasSettingsKey ? KEYBOARDMODE_WEB_WITH_SETTINGS_KEY
+				 : KEYBOARDMODE_WEB, true, hasVoice);
+				 */
+		}
         return null;
     }
 

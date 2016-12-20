@@ -297,15 +297,17 @@ public class LatinKeyboard extends Keyboard
 
         if (mIsAlphaKeyboard) {
             if (mMode == KeyboardSwitcher.MODE_URL) {
-                setNonMicF1Key(mF1Key, "/", R.xml.popup_slash);
+                setNonMicF1Key(mF1Key, "/", R.xml.popup_domains);
             } else if (mMode == KeyboardSwitcher.MODE_EMAIL) {
-                setNonMicF1Key(mF1Key, "@", R.xml.popup_at);
-            } else {
-                if (mVoiceEnabled && mHasVoiceButton) {
-                    setMicF1Key(mF1Key);
-                } else {
-                    setNonMicF1Key(mF1Key, ",", R.xml.popup_comma);
-                }
+                setNonMicF1Key(mF1Key, "@", R.xml.popup_emals);
+//			} else if (mMode == KeyboardSwitcher.MODE_TEXT) {
+//				setNonMicF1Key(mF1Key, ".", R.xml.popup_punctuation);
+			} else {
+//                if (mVoiceEnabled && mHasVoiceButton) {
+//                    setMicF1Key(mF1Key);
+//                } else {
+                    setNonMicF1Key(mF1Key, ",", R.xml.popup_altchars);
+//                }
             }
         } else if (mIsAlphaFullKeyboard) {
 			if (mMode == KeyboardSwitcher.MODE_URL) {
@@ -315,7 +317,7 @@ public class LatinKeyboard extends Keyboard
 			} else if (mMode == KeyboardSwitcher.MODE_IM) {
 				setNonMicF1Key(mF1Key, ":)", R.xml.popup_smileys);
 			} else if (mMode == KeyboardSwitcher.MODE_TEXT) {
-				if(LatinIME.sKeyboardSettings.keyboardMode > 2)
+				if (LatinIME.sKeyboardSettings.keyboardMode > 2)
 					setNonMicF1Key(mF1Key, ",", R.xml.popup_altchars);
 				else
 					setMicF1Key(mF1Key);

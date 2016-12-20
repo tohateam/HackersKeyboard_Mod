@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="alt_key_q">1q</string>
+    <string name="alt_key_w">2w</string>
+    <string name="alt_key_e">3e</string>
+    <string name="alt_key_r">4r</string>
+    <string name="alt_key_t">5ёt</string>
+    <string name="alt_key_y">6y</string>
+    <string name="alt_key_u">7u</string>
+    <string name="alt_key_i">8i</string>
+    <string name="alt_key_o">9o</string>
+    <string name="alt_key_p">0p</string>
+
+    <string name="alt_key_a">\@aáàâãäåāæ</string>
+	<string name="alt_key_s">\#sſ§ßšşśŝ</string>
+    <string name="alt_key_d">$dđďð</string>
+    <string name="alt_key_f">%f₣</string>
+    <string name="alt_key_g">&amp;gģğĝġ</string>
+    <string name="alt_key_h">-hĥ</string>
+    <string name="alt_key_j">+jĵ</string>
+    <string name="alt_key_k">(kĸķ</string>
+    <string name="alt_key_l">)l£₤λ</string>
+	
+    <string name="alt_key_z">*zžżź</string>
+    <string name="alt_key_x">\"x</string>
+    <string name="alt_key_c">\'cĉçčć¢</string>
+    <string name="alt_key_v">:v</string>
+    <string name="alt_key_b">;b</string>
+    <string name="alt_key_n">!nňŉŋńņñ</string>
+    <string name="alt_key_m">ъm\?¿μ</string>
+
+	<string name="alt_key_singleQuot">|</string>
+	<string name="alt_key_comma">&lt;</string>
+	<string name="alt_key_dot">&gt;</string>
+    <string name="alt_key_bksl">\\</string>
+	
+</resources>

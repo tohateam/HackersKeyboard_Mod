@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<string name="qwerty_bksl_main">/</string>
+    <string name="qwerty_bksl_shift">\?</string>
+    <string name="qwerty_bksl_alt">\\хш</string>
+	
+</resources>
