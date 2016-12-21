@@ -83,14 +83,14 @@ SharedPreferences.OnSharedPreferenceChangeListener
 	private static final int KBD_TABLET = R.xml.kbd_tablet;
 
     private LatinKeyboardView mInputView;
-    private static final int[] ALPHABET_MODES = { KEYBOARDMODE_NORMAL,
+//    private static final int[] ALPHABET_MODES = { KEYBOARDMODE_NORMAL,
 //		KEYBOARDMODE_URL, KEYBOARDMODE_EMAIL, KEYBOARDMODE_IM, KEYBOARDMODE_WEB, 
 //		KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY
 //		KEYBOARDMODE_URL_WITH_SETTINGS_KEY,
 //		KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY,
 //		KEYBOARDMODE_IM_WITH_SETTINGS_KEY,
 //		KEYBOARDMODE_WEB_WITH_SETTINGS_KEY 
-	};
+//	};
 
     private LatinIME mInputMethodService;
 
@@ -376,8 +376,6 @@ SharedPreferences.OnSharedPreferenceChangeListener
 				keyboardRowsResId = KBD_QWERTY;
 		}
 
-        // TODO: generalize for any KeyboardId
-        //int keyboardRowsResId = KBD_QWERTY;
         if (isSymbols) {
             if (mode == MODE_PHONE) {
                 return new KeyboardId(KBD_PHONE_SYMBOLS, 0, false, hasVoice);
@@ -392,32 +390,18 @@ SharedPreferences.OnSharedPreferenceChangeListener
 			case MODE_NONE:
 				LatinImeLogger.logOnWarning("getKeyboardId:" + mode + "," + imeOptions + "," + isSymbols);
 				/* fall through */
-			case MODE_TEXT:
-				return new KeyboardId(keyboardRowsResId, KEYBOARDMODE_NORMAL, true, hasVoice);
 			case MODE_SYMBOLS:
 				return new KeyboardId(KBD_SYMBOLS,
 									  mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
 									  : KEYBOARDMODE_SYMBOLS, false, hasVoice);
 			case MODE_PHONE:
 				return new KeyboardId(KBD_PHONE, 0, false, hasVoice);
-				/**
-				 case MODE_URL:
-				 return new KeyboardId(keyboardRowsResId,
-				 mHasSettingsKey ? KEYBOARDMODE_URL_WITH_SETTINGS_KEY
-				 : KEYBOARDMODE_URL, true, hasVoice);
-				 case MODE_EMAIL:
-				 return new KeyboardId(keyboardRowsResId,
-				 mHasSettingsKey ? KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY
-				 : KEYBOARDMODE_EMAIL, true, hasVoice);
-				 case MODE_IM:
-				 return new KeyboardId(keyboardRowsResId,
-				 mHasSettingsKey ? KEYBOARDMODE_IM_WITH_SETTINGS_KEY
-				 : KEYBOARDMODE_IM, true, hasVoice);
-				 case MODE_WEB:
-				 return new KeyboardId(keyboardRowsResId,
-				 mHasSettingsKey ? KEYBOARDMODE_WEB_WITH_SETTINGS_KEY
-				 : KEYBOARDMODE_WEB, true, hasVoice);
-				 */
+			case MODE_TEXT:
+			case MODE_URL:
+			case MODE_EMAIL:
+			case MODE_IM:
+			case MODE_WEB:
+				return new KeyboardId(keyboardRowsResId, KEYBOARDMODE_NORMAL, true, hasVoice);
 		}
         return null;
     }
@@ -430,14 +414,14 @@ SharedPreferences.OnSharedPreferenceChangeListener
         if (mCurrentId == null) {
             return false;
         }
-        int currentMode = mCurrentId.mKeyboardMode;
-        if (mFullMode > 0 && currentMode == KEYBOARDMODE_NORMAL)
+//       	 int currentMode = mCurrentId.mKeyboardMode;
+        if (mFullMode >= 0 && mCurrentId.mKeyboardMode == KEYBOARDMODE_NORMAL)
             return true;
-        for (Integer mode : ALPHABET_MODES) {
-            if (currentMode == mode) {
-                return true;
-            }
-        }
+//        for (Integer mode : ALPHABET_MODES) {
+//            if (currentMode == mode) {
+//                return true;
+//            }
+//        }
         return false;
     }
 
@@ -510,8 +494,7 @@ SharedPreferences.OnSharedPreferenceChangeListener
     }
 
     public void onCancelInput() {
-        // Snap back to the previous keyboard mode if the user cancels sliding
-        // input.
+        // Snap back to the previous keyboard mode if the user cancels sliding input.
         if (mAutoModeSwitchState == AUTO_MODE_SWITCH_STATE_MOMENTARY
 			&& getPointerCount() == 1)
             mInputMethodService.changeKeyboardMode();
@@ -556,8 +539,7 @@ SharedPreferences.OnSharedPreferenceChangeListener
      */
     public void onKey(int key) {
         // Switch back to alpha mode if user types one or more non-space/enter
-        // characters
-        // followed by a space/enter
+        // characters followed by a space/enter
         switch (mAutoModeSwitchState) {
 			case AUTO_MODE_SWITCH_STATE_MOMENTARY:
 				// Only distinct multi touch devices can be in this state.
