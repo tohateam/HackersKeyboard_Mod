@@ -79,43 +79,43 @@
 
     <string name="key_ad01_main">q</string>
     <string name="key_ad01_shift"></string>
-    <string name="key_ad01_alt">1й</string>
+    <string name="key_ad01_alt">й</string>
     
     <string name="key_ad02_main">w</string>
     <string name="key_ad02_shift"></string>
-    <string name="key_ad02_alt">2ц</string>
+    <string name="key_ad02_alt">ц</string>
     
     <string name="key_ad03_main">e</string>
     <string name="key_ad03_shift"></string>
-    <string name="key_ad03_alt">3уéèêëē€</string>
+    <string name="key_ad03_alt">уéèêëē€</string>
 
     <string name="key_ad04_main">r</string>
     <string name="key_ad04_shift"></string>
-    <string name="key_ad04_alt">4к</string>
+    <string name="key_ad04_alt">к</string>
     
     <string name="key_ad05_main">t</string>
     <string name="key_ad05_shift"></string>
-    <string name="key_ad05_alt">5е</string>
+    <string name="key_ad05_alt">е</string>
     
     <string name="key_ad06_main">y</string>
     <string name="key_ad06_shift"></string>
-    <string name="key_ad06_alt">6нýÿ¥</string>
+    <string name="key_ad06_alt">нýÿ¥</string>
 
     <string name="key_ad07_main">u</string>
     <string name="key_ad07_shift"></string>
-    <string name="key_ad07_alt">7гúùûüū</string>
+    <string name="key_ad07_alt">гúùûüū</string>
     
     <string name="key_ad08_main">i</string>
     <string name="key_ad08_shift"></string>
-    <string name="key_ad08_alt">8шíìîïī</string>
+    <string name="key_ad08_alt">шíìîïī</string>
     
     <string name="key_ad09_main">o</string>
     <string name="key_ad09_shift"></string>
-    <string name="key_ad09_alt">9щóòôõöōø</string>
+    <string name="key_ad09_alt">щóòôõöōø</string>
     
     <string name="key_ad10_main">p</string>
     <string name="key_ad10_shift"></string>
-    <string name="key_ad10_alt">0зπ₱</string>
+    <string name="key_ad10_alt">зπ₱</string>
     
     <string name="key_ad11_main">[</string>
     <string name="key_ad11_shift">{</string>
