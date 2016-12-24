@@ -145,7 +145,9 @@ public class LatinKeyboard extends Keyboard
         sSpacebarVerticalCorrection = res.getDimensionPixelOffset(R.dimen.spacebar_vertical_correction);
         mIsAlphaKeyboard = xmlLayoutResId == R.xml.kbd_qwerty;
 
-        mIsAlphaFullKeyboard = xmlLayoutResId == R.xml.kbd_full || xmlLayoutResId == R.xml.kbd_tablet;
+        mIsAlphaFullKeyboard = xmlLayoutResId == R.xml.kbd_full 
+			|| xmlLayoutResId == R.xml.kbd_tablet
+			|| xmlLayoutResId == R.xml.kbd_twohands;
         mIsFnFullKeyboard = xmlLayoutResId == R.xml.kbd_full_fn || xmlLayoutResId == R.xml.kbd_compact_fn;
         // The index of space key is available only after Keyboard constructor has finished.
         mSpaceKeyIndexArray = new int[] { indexOf(LatinIME.ASCII_SPACE) };

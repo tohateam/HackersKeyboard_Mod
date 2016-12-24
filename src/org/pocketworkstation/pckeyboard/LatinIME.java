@@ -230,7 +230,7 @@ public class LatinIME extends InputMethodService implements
     
     private int mHeightPortrait;
     private int mHeightLandscape;
-    private int mNumKeyboardModes = 4;
+    private int mNumKeyboardModes = 5;
     private int mKeyboardModeOverridePortrait;
     private int mKeyboardModeOverrideLandscape;
     private int mCorrectionMode;

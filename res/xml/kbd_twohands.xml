@@ -120,9 +120,9 @@
     </Row>
 
 	<!--===== Number row =====-->
-
+	<!--6.803846385-->
     <Row
-        android:keyWidth="6.803846385%p"
+        android:keyWidth="6.0%p"
 	>
         <Key
             android:keyLabel="@string/key_tlde_main"
@@ -161,7 +161,10 @@
             android:popupKeyboard="@xml/kbd_popup_narrow_template"
             android:popupCharacters="@string/key_ae05_alt"
 		/>
+
+
         <Key
+			android:horizontalGap="10.45%p"
             android:keyLabel="@string/key_ae06_main"
             android:shiftLabel="@string/key_ae06_shift"
             android:popupKeyboard="@xml/kbd_popup_narrow_template"
@@ -213,9 +216,9 @@
     </Row>
 
 	<!--===== QP row =====-->
-	
+
     <Row
-		android:keyWidth="6.6900015%p"
+		android:keyWidth="6.0%p"
 	>
         <Key
 			android:keyWidth="5.369997%p"
@@ -254,7 +257,10 @@
             android:popupKeyboard="@xml/kbd_popup_template"
             android:popupCharacters="@string/key_ad05_alt"
 		/>
+
+
         <Key
+			android:horizontalGap="14.97%p"
             android:keyLabel="@string/key_ad06_main"
             android:shiftLabel="@string/key_ad06_shift"
             android:popupKeyboard="@xml/kbd_popup_template"
@@ -296,12 +302,12 @@
             android:popupKeyboard="@xml/kbd_popup_template"
             android:popupCharacters="@string/key_ad12_alt"
 		/>
-        <Key
+        <!--<Key
             android:keyLabel="@string/key_bksl_main"
             android:shiftLabel="@string/key_bksl_shift"
             android:popupKeyboard="@xml/kbd_popup_template"
             android:popupCharacters="@string/key_bksl_alt"
-		/>
+		/>-->
         <Key
 			android:keyWidth="7.6599835%p"
 			android:codes="@integer/key_forward_del"
@@ -315,7 +321,7 @@
 	<!--===== AL row =====-->
 
     <Row
-		android:keyWidth="6.799996%p"
+		android:keyWidth="6.0%p"
 	>
         <Key
 			android:keyWidth="8.099997%p"
@@ -357,7 +363,10 @@
             android:popupKeyboard="@xml/kbd_popup_template"
             android:popupCharacters="@string/key_ac05_alt"
 		/>
+
+
         <Key
+			android:horizontalGap="11.80%p"
             android:keyLabel="@string/key_ac06_main"
             android:shiftLabel="@string/key_ac06_shift"
             android:popupKeyboard="@xml/kbd_popup_template"
@@ -394,7 +403,7 @@
             android:popupCharacters="@string/key_ac11_alt"
 		/>
         <Key
-			android:keyWidth="16.999996%p"
+			android:keyWidth="13.999996%p"
 			android:codes="@integer/key_return"
 			android:keyIcon="@drawable/sym_keyboard_return"
 			android:keyEdgeFlags="right"
@@ -403,9 +412,9 @@
     </Row>
 
 	<!--===== ZM row =====-->
-	
+
     <Row
-		android:keyWidth="6.803846385%p"
+		android:keyWidth="6.0%p"
 	>
         <Key
 			android:keyWidth="11.549997%p"
@@ -446,7 +455,10 @@
             android:popupKeyboard="@xml/kbd_popup_template"
             android:popupCharacters="@string/key_ab05_alt"
 		/>
+
+
         <Key
+			android:horizontalGap="10.45%p"
             android:keyLabel="@string/key_ab06_main"
             android:shiftLabel="@string/key_ab06_shift"
             android:popupKeyboard="@xml/kbd_popup_template"
@@ -498,13 +510,13 @@
 			android:isRepeatable="false"
 		/>
         <!--<Key
-			android:keyWidth="13.750005%p"
-			android:codes="@integer/key_shift"
-			android:keyIcon="@drawable/sym_keyboard_shift"
-			android:keyEdgeFlags="right"
-			android:isModifier="true"
-			android:isSticky="true"
-			android:isRepeatable="false"
+		android:keyWidth="13.750005%p"
+		android:codes="@integer/key_shift"
+		android:keyIcon="@drawable/sym_keyboard_shift"
+		android:keyEdgeFlags="right"
+		android:isModifier="true"
+		android:isSticky="true"
+		android:isRepeatable="false"
 		/>-->
 
     </Row>

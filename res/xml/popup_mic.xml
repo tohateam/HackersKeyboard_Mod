@@ -26,15 +26,41 @@
     android:keyHeight="@dimen/popup_key_height"
 >
     <Row
-        android:rowEdgeFlags="top|bottom"
+        android:rowEdgeFlags="top"
     >
         <Key
             android:codes="@integer/key_settings"
             android:keyIcon="@drawable/sym_keyboard_settings"
-            android:keyEdgeFlags="left" />
+            android:keyEdgeFlags="left"
+		/>
+		<Key
+            android:codes="@integer/key_show_hint"
+            android:keyIcon="@drawable/ic_format_size_white_24dp"
+		/>
+		<Key
+            android:codes="@integer/key_layout_change"
+            android:keyIcon="@drawable/ic_dialog_keyboard"
+            android:keyEdgeFlags="right"
+		/>
+    </Row>
+
+    <Row
+        android:rowEdgeFlags="bottom"
+    >
         <Key
+            android:codes="@integer/key_toggle_row"
+            android:keyIcon="@drawable/ic_keyboard_capslock_white_24dp"
+            android:keyEdgeFlags="left"
+		/>
+        <Key
+            android:codes="@integer/key_show_suggest"
+            android:keyIcon="@drawable/ic_spellcheck_white_24dp"
+		/>
+		<Key
             android:codes="@integer/key_voice"
             android:keyIcon="@drawable/sym_keyboard_mic"
-            android:keyEdgeFlags="right" />
+            android:keyEdgeFlags="right"
+		/>
     </Row>
+
 </Keyboard>

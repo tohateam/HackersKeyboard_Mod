@@ -81,6 +81,7 @@ SharedPreferences.OnSharedPreferenceChangeListener
     private static final int KBD_COMPACT_FN = R.xml.kbd_compact_fn;
 	// New layout
 	private static final int KBD_TABLET = R.xml.kbd_tablet;
+	private static final int KBD_TWOHANDS = R.xml.kbd_twohands;
 
     private LatinKeyboardView mInputView;
 //    private static final int[] ALPHABET_MODES = { KEYBOARDMODE_NORMAL,
@@ -179,7 +180,7 @@ SharedPreferences.OnSharedPreferenceChangeListener
     private KeyboardId makeSymbolsId(boolean hasVoice) {
         if (mFullMode == 1) {
             return new KeyboardId(KBD_COMPACT_FN, KEYBOARDMODE_SYMBOLS, true, hasVoice);
-        } else if (mFullMode == 2) {
+        } else if (mFullMode > 1) {
             return new KeyboardId(KBD_FULL_FN, KEYBOARDMODE_SYMBOLS, true, hasVoice);
         }
         return new KeyboardId(KBD_SYMBOLS,
@@ -371,6 +372,9 @@ SharedPreferences.OnSharedPreferenceChangeListener
 				break;
 			case 3:
 				keyboardRowsResId = KBD_TABLET;
+				break;
+			case 4:
+				keyboardRowsResId = KBD_TWOHANDS;
 				break;
 			default:
 				keyboardRowsResId = KBD_QWERTY;
