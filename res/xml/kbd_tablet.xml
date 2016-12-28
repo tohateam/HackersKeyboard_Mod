@@ -514,20 +514,20 @@
     <Row
 		android:rowEdgeFlags="bottom"
 		android:keyWidth="7.4814101%p">
-		<Key
-			android:keyEdgeFlags="left"
-			android:codes="@integer/key_next_language"
-			android:keyIcon="@drawable/ic_language_white_24dp"
-			android:isModifier="true"
-			android:isRepeatable="false"
-			android:popupKeyboard="@xml/popup_settings"
-		/>
         <Key
+			android:keyEdgeFlags="left"
 			android:codes="@integer/key_alt_left"
 			android:keyLabel="Alt"
 			android:isModifier="true"
 			android:isSticky="true"
 			android:isRepeatable="false"
+		/>
+		<Key
+			android:codes="@integer/key_next_language"
+			android:keyIcon="@drawable/ic_language_white_24dp"
+			android:isModifier="true"
+			android:isRepeatable="false"
+			android:popupKeyboard="@xml/popup_settings"
 		/>
         <Key
 			android:codes="@integer/key_f1"

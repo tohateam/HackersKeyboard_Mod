@@ -162,16 +162,23 @@
             android:popupCharacters="@string/key_ae05_alt"
 		/>
 
+        <Key
+			android:horizontalGap="4.4999985%p"
+			android:codes="@integer/key_toggle_row"
+            android:keyIcon="@drawable/ic_keyboard_capslock_white_24dp"
+            android:keyEdgeFlags="left"
+			android:isModifier="true"
+		/>
 
         <Key
-			android:horizontalGap="10.45%p"
-            android:keyLabel="@string/key_ae06_main"
+			android:horizontalGap="4.4999985%p"
+			android:keyLabel="@string/key_ae06_main"
             android:shiftLabel="@string/key_ae06_shift"
             android:popupKeyboard="@xml/kbd_popup_narrow_template"
             android:popupCharacters="@string/key_ae06_alt"
 		/>
         <Key
-            android:keyLabel="@string/key_ae07_main"
+			android:keyLabel="@string/key_ae07_main"
             android:shiftLabel="@string/key_ae07_shift"
             android:popupKeyboard="@xml/kbd_popup_narrow_template"
             android:popupCharacters="@string/key_ae07_alt"
@@ -207,12 +214,13 @@
             android:popupCharacters="@string/key_ae12_alt"
 		/>
         <Key
-			android:keyWidth="11.549997%p"
+			android:keyWidth="7.0%p"
 			android:codes="@integer/key_delete"
 			android:keyIcon="@drawable/sym_keyboard_delete"
 			android:keyEdgeFlags="right"
 			android:isRepeatable="true"
-			android:isModifier="true"/>
+			android:isModifier="true"
+		/>
     </Row>
 
 	<!--===== QP row =====-->
@@ -258,9 +266,15 @@
             android:popupCharacters="@string/key_ad05_alt"
 		/>
 
+        <Key
+			android:horizontalGap="5.31499175%p"
+            android:codes="@integer/key_show_suggest"
+            android:keyIcon="@drawable/ic_spellcheck_white_24dp"
+			android:isModifier="true"
+		/>
 
         <Key
-			android:horizontalGap="14.97%p"
+			android:horizontalGap="5.31499175%p"
             android:keyLabel="@string/key_ad06_main"
             android:shiftLabel="@string/key_ad06_shift"
             android:popupKeyboard="@xml/kbd_popup_template"
@@ -302,14 +316,8 @@
             android:popupKeyboard="@xml/kbd_popup_template"
             android:popupCharacters="@string/key_ad12_alt"
 		/>
-        <!--<Key
-            android:keyLabel="@string/key_bksl_main"
-            android:shiftLabel="@string/key_bksl_shift"
-            android:popupKeyboard="@xml/kbd_popup_template"
-            android:popupCharacters="@string/key_bksl_alt"
-		/>-->
-        <Key
-			android:keyWidth="7.6599835%p"
+
+		<Key
 			android:codes="@integer/key_forward_del"
 			android:keyEdgeFlags="right"
 			android:isRepeatable="true"
@@ -364,9 +372,16 @@
             android:popupCharacters="@string/key_ac05_alt"
 		/>
 
+		<Key
+			android:horizontalGap="3.45%p"
+			android:codes="@integer/key_show_hint"
+            android:keyIcon="@drawable/ic_format_size_white_24dp"
+			android:isModifier="true"
+			android:isRepeatable="false"
+		/>
 
         <Key
-			android:horizontalGap="11.80%p"
+			android:horizontalGap="4.048460845%p"
             android:keyLabel="@string/key_ac06_main"
             android:shiftLabel="@string/key_ac06_shift"
             android:popupKeyboard="@xml/kbd_popup_template"
@@ -403,7 +418,7 @@
             android:popupCharacters="@string/key_ac11_alt"
 		/>
         <Key
-			android:keyWidth="13.999996%p"
+			android:keyWidth="12.301535155%p"
 			android:codes="@integer/key_return"
 			android:keyIcon="@drawable/sym_keyboard_return"
 			android:keyEdgeFlags="right"
@@ -456,9 +471,15 @@
             android:popupCharacters="@string/key_ab05_alt"
 		/>
 
+        <Key
+			android:codes="@integer/key_settings"
+            android:keyIcon="@drawable/sym_keyboard_settings"
+            android:isModifier="true"
+			android:isRepeatable="false"
+		/>
 
         <Key
-			android:horizontalGap="10.45%p"
+			android:horizontalGap="1.048460845%p"
             android:keyLabel="@string/key_ab06_main"
             android:shiftLabel="@string/key_ab06_shift"
             android:popupKeyboard="@xml/kbd_popup_template"
@@ -489,6 +510,8 @@
             android:popupCharacters="@string/key_ab10_alt"
 		/>
         <Key
+			android:horizontalGap="1.0%p"
+			android:keyWidth="6.803846385%p"
 			android:codes="@integer/key_home"
 			android:keyIcon="@drawable/ic_chevron_double_left"
 			android:isModifier="true"
@@ -496,12 +519,14 @@
 			android:isRepeatable="false"
 		/>
         <Key
+			android:keyWidth="6.803846385%p"
 			android:codes="@integer/key_dpad_up"
 			android:keyLabel="&#x25b3;"
 			android:isModifier="true"
 			android:isRepeatable="true"
 		/>
         <Key
+			android:keyWidth="6.803846385%p"
 			android:codes="@integer/key_end"
 			android:keyIcon="@drawable/ic_chevron_double_right"
 			android:keyEdgeFlags="right"
